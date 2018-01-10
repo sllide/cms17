@@ -1,1 +1,1 @@
-Hi, this is a cms panel <?= "thing" ?> :)
+Hi, this is a cms panel :)

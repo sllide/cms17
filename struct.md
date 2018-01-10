@@ -10,38 +10,33 @@ Other than that file everything is fair game and can be dropped wherever needed.
 ##### plugin.php
   the entry file containing everything php related. Here the programmer has plenty of freedom doing whatever he wants. However, there are a few required functions that need to be defined.
   ```php
-  class reviewPlugin {
-    //function used to setup widget if it isnt installed yet
-    function initialize() {
-      //do initial setup stuff :)
-      //database tables will be initialized at this point
+  class examplePlugin extends Plugin {
+
+    //This will be the method to define any database related structure
+    function getDataStructure() {
+      return "";
     }
 
-    //these are the functions called whenever their tag is found
-    //view functions need to return a string with whatever needs to be printed
-    function widgetView() {
-      return "<h1>Hello View!</h1>";
-    }
-    function pageView() {
-      return file_get_contents("pageView.html");
+    //setup will be called if the getDataStructure function reporst a different structure than the database reports
+    function setup($db) {
+      return true;
     }
 
-    //function used to retrieve all tags used by plugin
-    function registerTags() {
-      //create array to be returned
-      $tags = new Array();
+    //this is a method called when a tag is found in a template
+    //this method is hooked in the function below
+    function view() {
+      //get page data
+      return "Hello example plugin!";
+    }
 
-      //create tags
-      $widget = new Array("reviewWidget", $this->widgetView);
-      $page = new Array("reviewPage", $this->pageView);
-
-      $tags[] = $widget;
-      $tags[] = $page;
-      return $tags;
+    //A required function needed to register all tags the plugin provides
+    //Can be empty if there are no tags, it has to exist tho.
+    function registerTags($tagEngine) {
+      $tagEngine->register("example", [$this, 'view']);
     }
   }
 
-  $plugins->register(new reviewPlugin());
+  return new examplePlugin();
   ```
 
 #### Database

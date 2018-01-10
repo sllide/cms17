@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <title>@title@</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="/layout/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <link rel="stylesheet" href="layout/style.css">
   </head>
   <body>
-    @page@
+
+    <div class="container is-fluid">
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <img src="layout/title.png" alt="">
+          </div>
+        </div>
+        <div class="level-right">
+          @navigation@
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <section class="section">
+        @page@
+      </section>
+    </div>
+
   </body>
 </html>

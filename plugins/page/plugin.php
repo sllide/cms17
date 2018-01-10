@@ -11,10 +11,7 @@ class pagePlugin extends Plugin {
 
   function pageView() {
     //get page data
-    $payload = "<div id='content'>";
-    $payload.= $this->getPage();
-    $payload.= "</div>";
-    return $payload;
+    return $this->getPage();
   }
 
   function getPage() {
