@@ -1,5 +1,5 @@
 <?php
-  class TemplateEngine {
+  class templateEngine {
 
     function __construct($tagEngine) {
       $this->tagEngine = $tagEngine;
