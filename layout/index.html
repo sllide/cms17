@@ -13,16 +13,23 @@
       <nav class="level">
         <div class="level-left">
           <div class="level-item">
-            <img src="layout/title.png" alt="">
+            <img class="is-hidden-mobile" src="layout/images/title.png" alt="" />
+            <h1 class="is-hidden-tablet title">@title@</h1>
           </div>
         </div>
         <div class="level-right">
-          @navigation@
+          <div class="level-item">
+            @navigation@
+          </div>
         </div>
       </nav>
     </div>
 
-    <div class="container">
+    <div class="container mainContent">
+      <img class="floatImage" style="left: -200px; top: 100px;" src="layout/images/triforce.png" alt="" />
+      <img class="floatImage" style="right: -250px; top: 200px;" src="layout/images/block.png" alt="" />
+      <img class="floatImage" style="left: -250px; top: 400px;" src="layout/images/carrot.png" alt="" />
+      <img class="floatImage" style="right: -200px; top: 5px;" src="layout/images/s.png" alt="" />
       <section class="section">
         @page@
       </section>

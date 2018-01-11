@@ -1,3 +1,11 @@
 html {
-  background-image: url("/layout/background.png");
+  background-image: url("/layout/images/background.png");
+}
+
+.mainContent {
+  position: relative;
+}
+
+.floatImage {
+  position: absolute;
 }

@@ -1,5 +1,5 @@
 <?php
-  class pluginLoader {
+  class pluginManager {
 
     private $plugins = array();
 
