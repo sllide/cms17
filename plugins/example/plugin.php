@@ -1,5 +1,5 @@
 <?php
-class examplePlugin extends plugin {
+class ExamplePlugin extends Plugin {
 
   //This will be the method to define any database related structure
   function getDataStructure() {
@@ -25,5 +25,5 @@ class examplePlugin extends plugin {
   }
 }
 
-return new examplePlugin();
+return new ExamplePlugin();
 ?>

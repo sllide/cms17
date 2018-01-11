@@ -1,5 +1,5 @@
 <?php
-  class tagEngine {
+  class TagEngine {
 
     private $tagList;
 

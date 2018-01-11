@@ -1,13 +1,16 @@
 <?php
   require_once("system/classLoader.php");
 
+  //initialize database
+  $database = new Database();
+
   //load template engine
-  $tagEngine = new tagEngine();
-  $templateEngine = new templateEngine($tagEngine);
+  $tagEngine = new TagEngine();
+  $templateEngine = new TemplateEngine($tagEngine);
 
   //load all plugins
-  $pluginManager = new pluginManager();
-  $pluginManager->load($tagEngine);
+  $pluginManager = new PluginManager($database, $tagEngine);
+  $pluginManager->load();
 
   //build page
   $page = file_get_contents("layout/index.html");

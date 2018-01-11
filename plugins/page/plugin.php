@@ -1,5 +1,5 @@
 <?php
-class pagePlugin extends plugin {
+class PagePlugin extends Plugin {
 
   function getDataStructure() {
     return "";
@@ -39,5 +39,5 @@ class pagePlugin extends plugin {
   }
 }
 
-return new pagePlugin();
+return new PagePlugin();
 ?>
