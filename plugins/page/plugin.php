@@ -2,11 +2,32 @@
 class PagePlugin extends Plugin {
 
   function getDataStructure() {
-    return "";
+    return [
+      "pages" => [
+        "key" => "TEXT NOT NULL DEFAULT key",
+        "path" => "TEXT NOT NULL DEFAULT path",
+        "enabled" => "INT NOT NULL DEFAULT 0",
+      ],
+    ];
   }
 
   function setup($db) {
-    return true;
+    $data = [
+      "title" => "Home",
+      "key" => "home",
+      "path" => "home.html",
+      "enabled" => 1,
+    ]; $db->insertIntoTable("pages", $data);
+    $data = [
+      "title" => "Homea",
+      "key" => "homea",
+      "path" => "homea.html",
+      "enabled" => 1,
+    ]; $db->insertIntoTable("pages", $data);
+  }
+
+  function initialize($db) {
+    $this->data = $db->getAllFromTable("pages");
   }
 
   function pageView() {
@@ -16,26 +37,37 @@ class PagePlugin extends Plugin {
 
   function getPage() {
     $pagePath = "pages/";
+    //default to home
+    $pageKey = "home";
 
     //check if GET variable page is set
-    //if so join it in the path, if not set the path to point to home.html
-
-    if(!isset($_GET['page'])) {
-      $_GET['page'] = "home";
-    }
-    $pagePath .= $_GET['page'] . ".html";
-
-    //check if file exists and load if it does
-    //else return page not found string
-    if(file_exists($pagePath)) {
-      return file_get_contents($pagePath);
+    //if so set the page key
+    if(isset($_GET['page'])) {
+      $pageKey = $_GET['page'];
     }
 
-    return "page '" . $_GET['page'] . "' does not exist.";
+    //go over all pages entries
+    foreach($this->data as $row) {
+      if($row['key'] == $pageKey) {
+        //if its there and enabled return the content
+        if($row['enabled'] == 1 && file_exists("pages/" . $row['path'])) {
+          return file_get_contents("pages/" . $row['path']);
+        } else {
+          break;
+        }
+      }
+    }
+
+    //return false if page isnt or not accesable
+    return "Page " . $pageKey . " not found. :(";
   }
 
   function registerTags($tagEngine) {
     $tagEngine->register("page", [$this, 'pageView']);
+  }
+
+  function getMetaData() {
+    return ['name' => 'Page view','description' => 'Shows pages'];
   }
 }
 

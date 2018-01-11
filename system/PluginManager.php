@@ -13,9 +13,19 @@
 
       foreach($dirs as $dir) {
         $plugin = require_once($dir."/plugin.php");
-        $plugin->registerTags($this->tagEngine);
-        $plugins[] = $plugin;
+        $this->plugins[] = $plugin;
       }
+    }
+
+    function initializeAll() {
+      foreach($this->plugins as $plugin) {
+        $plugin->initialize($this->database);
+        $plugin->registerTags($this->tagEngine);
+      }
+    }
+
+    function getPlugins() {
+      return $this->plugins;
     }
   }
 ?>

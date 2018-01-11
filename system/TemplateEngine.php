@@ -20,7 +20,11 @@
        if(!$replacement) {
          $payload = "Tag '" . $match . "' not found.";
        } else {
-         $payload = $replacement();
+         if(is_string($replacement)) {
+           $payload = $replacement;
+         } else {
+           $payload = $replacement();
+         }
        }
        $input = substr_replace($input, $payload, $offset, strlen($match)+2);
      }

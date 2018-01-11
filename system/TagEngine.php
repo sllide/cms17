@@ -3,7 +3,8 @@
 
     private $tagList;
 
-    function __construct() {
+    function __construct($database) {
+      $this->database = $database;
       $this->tagList = array();
     }
 
@@ -12,7 +13,12 @@
     }
 
     function getTagValue($tagName) {
-      //search for all known tags
+      //look for data matches
+      $matches = $this->database->getAllMatchesFromTable("tags", "name = '$tagName'");
+      if(count($matches)>0) {
+        return $matches[0]['value'];
+      }
+      //if no data tag exist look for plugin tag
       if(isset($this->tagList[$tagName])) {
         return $this->tagList[$tagName];
       }
