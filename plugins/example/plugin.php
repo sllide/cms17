@@ -1,5 +1,5 @@
 <?php
-class examplePlugin extends Plugin {
+class examplePlugin extends plugin {
 
   //This will be the method to define any database related structure
   function getDataStructure() {
