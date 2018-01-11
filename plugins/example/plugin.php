@@ -42,7 +42,7 @@ class ExamplePlugin extends Plugin {
   }
 
   function getMetaData() {
-    return ['name' => 'A test plugin','description' => 'Does some funky stuff'];
+    return ['name' => 'Test plugin','description' => 'Does some funky stuff'];
   }
 }
 

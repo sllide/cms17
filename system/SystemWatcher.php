@@ -10,6 +10,15 @@
         "name" => "TEXT",
         "value" => "TEXT",
       ],
+      "plugins" => [
+        "name" => "TEXT",
+        "enabled" => "INT",
+      ],
+      "visits" => [
+        "page" => "TEXT",
+        "date" => "DATETIME",
+        "visits" => "INT",
+      ]
     ];
 
     function __construct($database, $databaseHelper) {

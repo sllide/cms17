@@ -18,12 +18,6 @@ class PagePlugin extends Plugin {
       "path" => "home.html",
       "enabled" => 1,
     ]; $db->insertIntoTable("pages", $data);
-    $data = [
-      "title" => "Homea",
-      "key" => "homea",
-      "path" => "homea.html",
-      "enabled" => 1,
-    ]; $db->insertIntoTable("pages", $data);
   }
 
   function initialize($db) {

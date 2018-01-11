@@ -75,7 +75,7 @@
                   <div class="notification is-danger">
                     <h1 class="title">DANGER</h1>
                     <p>
-                      There is data found in the database wich means there is a possibility that your data is still intact.
+                      There is data found in the database wich means most of it is still there, its just broken.
                       Clicking on create will <strong>destroy</strong> all data that currently resides in the database. Continue at your own risk.
                     </p>
                   </div>
@@ -112,6 +112,7 @@
 
             <div class="control">
               <input type="submit" class="button is-link" value="Create" />
+              <p class="help">Admin panel will be available at /?admin</p>
             </div>
 
             </form>

@@ -36,7 +36,7 @@
   //build page
 
   if(isset($_GET['admin'])) {
-    echo file_get_contents("panel/admin.php");
+    require_once("panel/admin.php");
   } else {
     $page = file_get_contents("layout/index.html");
     $output = $templateEngine->build($page);

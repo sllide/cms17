@@ -22,7 +22,7 @@ class NavigationPlugin extends Plugin {
     $data = $this->getLinks();
     $payload = "";
     foreach($data as $title => $key) {
-      $payload .= "<a href='/?page=$key'>$title</a> ";
+      $payload .= "<a href='/?page=$key'>$title</a>&nbsp;";
     }
     return $payload;
   }

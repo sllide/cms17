@@ -1,5 +1,9 @@
 <?php
+
+  //So, I considered these functions save. But as it grew I stopped paying attention to it.
+  //TODO: fix it.
   class Database {
+
     function __construct() {
       $this->db = new PDO('sqlite:system/database.db');
       $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -101,6 +105,10 @@
       $s = $this->db->prepare($q);
       $s->execute();
       return $s->fetchAll();
+    }
+
+    function getObject() {
+      return $this->db;
     }
   }
 ?>
