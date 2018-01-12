@@ -22,11 +22,20 @@
 
     function buildDataStructure($struct) {
       foreach($struct as $table => $data) {
-        $this->db->createTable($table);
-        foreach($data as $name => $value) {
-          $this->db->createColumn($table, $name, $value);
-        }
+        $this->db->createTable($table, $data);
       }
+    }
+
+    function getPluginStatus($key) {
+      $plugin = $this->db->getPlugin($key);
+      if($plugin == "") {
+        return -1;
+      }
+      if($plugin['enabled'] == 1) {
+        return 1;
+      }
+
+      return 0;
     }
   }
 ?>

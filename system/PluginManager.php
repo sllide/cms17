@@ -1,48 +1,58 @@
 <?php
   class PluginManager {
 
-    private $plugins = array();
-
-    function __construct($database, $tagEngine) {
-      $this->database = $database;
-      $this->tagEngine = $tagEngine;
+    function __construct($database) {
+      $this->plugins = array();
+      $this->db = $database;
     }
 
-    function load() {
-      $dirs = array_filter(glob('plugins/*'), 'is_dir');
+    function loadAll() {
+      $dirs = array_filter(glob('../plugins/*'), 'is_dir');
 
       foreach($dirs as $dir) {
-        $key = explode('/',$dir)[1];
+        $key = explode('/',$dir)[2];
         $plugin = require_once($dir."/plugin.php");
         $this->plugins[$key] = $plugin;
       }
     }
 
-    function initializeAll() {
-      foreach($this->plugins as $plugin) {
-        if($this->isPluginEnabled($plugin)) {
-          $plugin->initialize($this->database);
-          $plugin->registerTags($this->tagEngine);
+    function registerEnabled($tagEngine) {
+      foreach($this->plugins as $key => $plugin) {
+        if($this->isPluginEnabled($key)) {
+          $plugin->registerTags($tagEngine);
         }
       }
     }
 
-    function isPluginEnabled($plugin) {
-      $pData = $plugin->getMetaData();
-      $matches = $this->database->getAllMatchesFromTable("plugins", "name = '" . $pData['name'] . "'");
+    function fireLogicHandlers() {
+      foreach($this->plugins as $key => $plugin) {
+        if($this->isPluginEnabled($key)) {
+          $plugin->handleLogic($this->db->getDatabaseObject());
+        }
+      }
+    }
 
-      //plugin entry doesnt exist, create it with enabled status
-      if(count($matches) == 0) {
-      $data = [ "name" => $pData['name'], "enabled" => 1];
-        $this->database->insertIntoTable("plugins",$data);
+    function firePanelLogicHandlers() {
+      foreach($this->plugins as $key => $plugin) {
+        $plugin->handlePanelLogic($this->db->getDatabaseObject());
+      }
+    }
+
+    function isPluginEnabled($key) {
+      $pluginRow = $this->db->getPlugin($key);
+
+      //if plugin entry exists and is enabled say yes
+      if(isset($pluginRow['enabled']) && $pluginRow['enabled'] == 1) {
         return true;
       }
 
-      //if plugin is found and its enable tell it so
-      if($matches[0]['enabled'] == 1) {
-        return true;
-      }
+      return false;
+    }
 
+    function getPlugin($key) {
+      if(isset($this->plugins[$key])) {
+        return $this->plugins[$key];
+      }
       return false;
     }
 

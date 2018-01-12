@@ -4,24 +4,35 @@ class PagePlugin extends Plugin {
   function getDataStructure() {
     return [
       "pages" => [
-        "key" => "TEXT NOT NULL DEFAULT key",
-        "path" => "TEXT NOT NULL DEFAULT path",
+        "title" => "TEXT",
+        "key" => "TEXT",
+        "path" => "TEXT",
         "enabled" => "INT NOT NULL DEFAULT 0",
       ],
     ];
   }
 
   function setup($db) {
-    $data = [
-      "title" => "Home",
-      "key" => "home",
-      "path" => "home.html",
-      "enabled" => 1,
-    ]; $db->insertIntoTable("pages", $data);
+    $db->exec("INSERT INTO pages (title, key, path, enabled) VALUES('Home', 'home', 'home.html', 1)");
   }
 
-  function initialize($db) {
-    $this->data = $db->getAllFromTable("pages");
+  function handleLogic($db) {
+    $s = $db->query("SELECT * FROM pages");
+    $this->links = $s->fetchAll();
+  }
+
+  function handlePanelLogic($db) {
+
+  }
+
+  function navigationView() {
+    $payload = "";
+    foreach($this->links as $row) {
+      $key = $row['key'];
+      $title = $row['title'];
+      $payload .= "<a href='/$key'>$title</a>&nbsp;";
+    }
+    return $payload;
   }
 
   function pageView() {
@@ -30,22 +41,22 @@ class PagePlugin extends Plugin {
   }
 
   function getPage() {
-    $pagePath = "pages/";
+    $pagePath = "../pages/";
     //default to home
     $pageKey = "home";
 
-    //check if GET variable page is set
+    //check if first sub dir is set
     //if so set the page key
-    if(isset($_GET['page'])) {
-      $pageKey = $_GET['page'];
+    if(isset($GLOBALS['PATH'][1]) && strlen($GLOBALS['PATH'][1])>0) {
+      $pageKey = $GLOBALS['PATH'][1];
     }
 
     //go over all pages entries
-    foreach($this->data as $row) {
+    foreach($this->links as $row) {
       if($row['key'] == $pageKey) {
         //if its there and enabled return the content
-        if($row['enabled'] == 1 && file_exists("pages/" . $row['path'])) {
-          return file_get_contents("pages/" . $row['path']);
+        if($row['enabled'] == 1 && file_exists($pagePath . $row['path'])) {
+          return file_get_contents($pagePath . $row['path']);
         } else {
           break;
         }
@@ -58,10 +69,22 @@ class PagePlugin extends Plugin {
 
   function registerTags($tagEngine) {
     $tagEngine->register("page", [$this, 'pageView']);
+    $tagEngine->register("navigation", [$this, 'navigationView']);
+  }
+
+  function registerPanelTags($tagEngine) {
+
+  }
+
+  function getPanelView() {
+    return "page";
   }
 
   function getMetaData() {
-    return ['name' => 'Page view','description' => 'Shows pages'];
+    return [
+      'name' => 'Page controller',
+      'description' => 'Show multiple pages and create navigation bars!',
+    ];
   }
 }
 
