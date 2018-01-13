@@ -5,7 +5,7 @@ CMS17 is a modular content management system written for personal use. Having a 
 
 ## Functionality
 * Clean control panel
-  * SB Admin 2 bootstrap theme
+  * Bulma css
   * Add and edit pages
   * Control plugins and their parameters
   * Manage template variables
