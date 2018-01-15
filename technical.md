@@ -16,7 +16,7 @@ CMS structure
     * Engine.php
     * Plugin.php
     * PluginData.php
-    * PluginTemplates.php
+    * PluginTags.php
   * cores/ **_extends Core_**
     * websiteCore.php
     * controlCore.php
@@ -46,7 +46,7 @@ CMS structure
       * ...
     * plugin.php **_extends Plugin_**
     * Data.php **_extends PluginData_**
-    * Templates.php **_extends PluginTemplates_**
+    * Tags.php **_extends PluginTags_**
   * portfolio/
   * guestbook/
 
@@ -117,7 +117,6 @@ The base and entry point of every plugin.
 |-|-|-|
 |initPlugin()|Null|Called when a tag is found the plugin registered (only called once)
 |initConfig()|Null|Called when the config panel is loaded (only called once)
-|buildTag(String $tagName)|String (tag output)|Called when a tag is found and needs to be built
 |doPost(Array $_POST)|Null|Called when the post data mentions 'plugin' => $pluginKey
 |doConfigPost(Array $_POST)|Null|Called when the post data mentions 'plugin' => $pluginKey in config mode
 
@@ -131,17 +130,15 @@ All plugin meta data will be described here. Wich services are needed. What thei
 |getDescription()|String|return plugin description
 |getAuthor()|String|return plugin author
 |getVersion()|Double|return plugin version
-|getTableNames()|String array|return table names in a string array
+|getDataStructure()|two dimentional dictionary|return database structure
 |getNeededServices()|String array|return services plugin requires
 |getConfigName()|String or False|return string pointing to template function or false if there is no panel
 |getPublicTags()|String array|return all tag names that are accessable from outside the plugin
-|-|-|-|
-|registerTableStructure(String table, Callable $builder)|Null|Asks the plugin to register a tables data types
 
-Templates.php _(extends PluginTemplates)_
+Tags.php _(extends PluginTags)_
 -----------
-This class will contain all the functions needed to build templates.
+This class will contain all the functions needed to build tags. When a tag is found of a plugin that has not yet been initialized it will initialize the plugin. Then a separate tag engine and template builder will be created and pointed to the template.php tag function. This is to expand the functionality of plugins and to encapsulate tag usage so plugins cant use higher level tags making the cms a tiny bit safer.
 
 |Function|Return Type|Description|
 |-|-|-|
-|{templateName}(Callable $builder)|Null|Invoked when the plugin asks for a template to be built. Register the tags needed for the template to be built and the template itself to the builder.
+|{tagName}($templateService)|Null|Invoked when the plugin asks for a template to be built. Register the tags needed for the template to be built and the template itself to the template service.

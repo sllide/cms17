@@ -3,6 +3,8 @@ Dont store templates in the database, having them on disk doesnt require a datab
 rename PluginData.php to Data.php.
 rename PluginData.php getTags method to getPublicTags.
 
+Use ajax for post requests so plugins can do some sexy seamless actions
+
 Decide if the TagEngine should have the data tags registered already or if it should look in the database for them.
 If it looks into the database this could reduce the time needed to initialize the tag engine.
 
