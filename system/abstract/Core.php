@@ -1,7 +1,7 @@
 <?php
   abstract class Core {
-
-    protected $engine;
+    protected $engine = [];
+    
     public final function registerEngines(&$engine) {
       $this->engine = $engine;
     }

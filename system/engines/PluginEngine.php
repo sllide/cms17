@@ -1,44 +1,67 @@
 <?php
   class PluginEngine extends Engine {
 
-    private $pluginList= [];
+    private $key, $data, $tags, $panel, $services, $plugin, $initialized;
 
-    function loadPlugins($keyList) {
-      foreach($keyList as $key => $value)
-      $this->loadPlugin($value['key']);
+    function load($key) {
+      $this->key = $key;
     }
 
-    function loadPlugin($key) {
-      $this->pluginList[$key] = [];
-      $this->pluginList[$key]['data'] = require("plugins/$key/PluginData.php");
+    function getData() {
+      if(!$this->key) die("plugin not initialized");
+      if(!$this->data) {
+        $this->data = require("plugins/".$this->key."/Data.php");
+      }
+      return $this->data;
     }
 
-    function getPlugin($key) {
-      return $this->pluginList[$key];
+    function getTags() {
+      if(!$this->key) die("plugin not initialized");
+      if(!$this->tags) {
+        $this->tags = require("plugins/".$this->key."/Tags.php");
+      }
+      return $this->tags;
     }
 
-    function getPlugins() {
-      return $this->pluginList;
+    function getPanel() {
+      if(!$this->key) die("plugin not initialized");
+      if(!$this->panel) {
+        $this->panel = require("plugins/".$this->key."/Panel.php");
+      }
+      return $this->panel;
     }
 
-    function getPluginTagValue($key, $tag) {
-      //plugin not found
-      if(!isset($this->pluginList[$key])) {
-        return "$key not found.";
+    private function getPlugin() {
+      $this->getData();
+      if(!$this->key) die("plugin not initialized");
+      if(!$this->plugin) {
+        $this->plugin = require("plugins//".$this->key."//Plugin.php");
+      }
+    }
+
+    function getServices() {
+      $this->getData();
+      if(!$this->services) {
+        $this->services = $this->engine->service->getServices($this->data->services);
+        $this->plugin->registerServices($this->services);
       }
 
-      //plugin not initialized
-      if(!isset($this->pluginList[$key]['plugin'])) {
-        $this->initializePlugin($key);
-      }
-
-
-      return $this->pluginList[$key]['plugin']->buildTag($tag);
+      return $this->services;
     }
 
-    function initializePlugin($key) {
-      $this->pluginList[$key]['plugin'] = require("plugins/$key/Plugin.php");
-      $this->pluginList[$key]['plugin']->initPlugin();
+    function getContent() {
+      $this->getPlugin();
+      $this->getServices();
+      if(!$this->initialized) {
+        $this->plugin->initialize();
+        $this->initialized = true;
+      }
+      return $this->plugin->build();
+    }
+
+    function getKey() {
+      if(!$this->key) die("plugin not initialized");
+      return $this->key;
     }
   }
 ?>

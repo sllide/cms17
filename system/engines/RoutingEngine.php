@@ -1,26 +1,48 @@
 <?php
   class RoutingEngine extends Engine {
-    private $route = [];
+    private $page, $action, $extra;
 
     function initialize() {
-      $path = explode ("/", strtolower($_SERVER['REQUEST_URI']));
+      //initialize route as "" to ensure it doesnt return invalid values
+      $this->page = $this->action = $this->extra = "";
 
-      //path is build up like www.cms17.com/key/value/key/value
-      for($i=1;$i<count($path);$i+=2) {
-        //only add complete routes
-        if(isset($path[$i+1])) {
-          $this->route[$path[$i]] = $path[$i+1];
+      //remove outer slashes to clean the path
+      $path = trim($_SERVER['REQUEST_URI'], "/");
+      $path = explode("/", $path);
+
+      //remove admin from route
+      if(isset($path[0]) && $path[0] == 'admin') {
+        array_shift($path);
+      }
+
+      if(isset($path[0])) {
+        $this->page = $path[0];
+
+        if(isset($path[1])) {
+          $this->action = $path[1];
+
+          if(isset($path[2])) {
+            $this->extra = $path[2];
+          }
         }
       }
 
       //add page if it isnt extracted from the uri
-      if(!isset($this->route['page'])) {
-        $this->route['page'] = 'home';
+      if($this->page == "") {
+        $this->page = 'home';
       }
     }
 
-    function getRoute() {
-      return $this->route;
+    function getPage() {
+      return $this->page;
+    }
+
+    function getAction() {
+      return $this->action;
+    }
+
+    function getExtra() {
+      return $this->extra;
     }
   }
 ?>

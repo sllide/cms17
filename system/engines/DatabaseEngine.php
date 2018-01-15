@@ -48,30 +48,30 @@
       return $this->db->lastInsertId();
     }
 
-    function findSingleInTable($table, $column, $value) {
-      $column = preg_replace("/[^A-Za-z]/", '', $column);
-      $q = "SELECT rowid, * FROM $table WHERE $column = ?";
+    function getDatabase() {
+      return $this->db;
+    }
+
+    function getAllTags() {
+      $q = "SELECT * FROM tags";
       $s = $this->db->prepare($q);
-      $s->bindParam(1, $value);
+      $s->execute();
+      return $s->fetchAll();
+    }
+
+    function getEnabledPages() {
+      $q = "SELECT * FROM pages WHERE enabled = 1";
+      $s = $this->db->prepare($q);
+      $s->execute();
+      return $s->fetchAll();
+    }
+
+    function getPageByKey($key) {
+      $q = "SELECT * FROM pages WHERE path = ?";
+      $s = $this->db->prepare($q);
+      $s->bindParam(1,$key);
       $s->execute();
       return $s->fetch();
-    }
-
-
-    function findInTable($table, $column, $value) {
-      $column = preg_replace("/[^A-Za-z]/", '', $column);
-      $q = "SELECT rowid, * FROM $table WHERE $column = ?";
-      $s = $this->db->prepare($q);
-      $s->bindParam(1, $value);
-      $s->execute();
-      return $s->fetchAll();
-    }
-
-    function getAllFromTable($table) {
-      $q = "SELECT rowid, * FROM $table";
-      $s = $this->db->prepare($q);
-      $s->execute();
-      return $s->fetchAll();
     }
   }
 ?>
