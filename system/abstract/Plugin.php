@@ -1,9 +1,9 @@
 <?php
   abstract class Plugin {
 
-    protected $services;
-    public final function registerService($name, $service) {
-      $this->services[$name] = $service;
+    protected $service;
+    public final function registerServices($service) {
+      $this->service = $service;
     }
 
     public final function __construct() {}

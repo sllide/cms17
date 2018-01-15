@@ -15,10 +15,6 @@
         "key" => "TEXT NOT NULL",
         "enabled" => "INT NOT NULL",
       ],
-      "templates" => [
-        "name" => "TEXT NOT NULL",
-        "template" => "TEXT NOT NULL",
-      ],
       "log" => [
         "invoker" => "TEXT NOT NULL",
         "type" => "TEXT NOT NULL",
@@ -28,7 +24,7 @@
         "path" => "TEXT NOT NULL",
         "name" => "TEXT NOT NULL",
         "content" => "TEXT NOT NULL",
-        "templateID" => "INT NOT NULL",
+        "templateName" => "TEXT NOT NULL",
         "enabled" => "BOOLEAN NOT NULL DEFAULT 0",
       ],
     ];

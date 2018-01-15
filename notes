@@ -1,0 +1,21 @@
+Dont store templates in the database, having them on disk doesnt require a database to load them. This in case something goes wrong.
+
+rename PluginData.php to Data.php.
+rename PluginData.php getTags method to getPublicTags.
+
+Decide if the TagEngine should have the data tags registered already or if it should look in the database for them.
+If it looks into the database this could reduce the time needed to initialize the tag engine.
+
+Also think about plugin tags, should they be registered as functions in the TagEngine itself or stored as strings so the PluginManager can handle them.
+
+Maybe tie system tags directly to the core to ensure they exist when needed.
+
+Split plugin functionality into website and cms classes.
+
+Other tags the core needs can be defined as data tags and function tags.
+
+Split database functionality for the system itself in a seperate engine.
+
+Think about how cores should work and extend it accordingly. They are a mess at the moment.
+
+Create a Page Engine cores can use to show pages.

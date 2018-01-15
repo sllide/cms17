@@ -8,6 +8,7 @@
 
     public final function __construct() {}
 
+
     public abstract function initialize();
     public abstract function build();
   }
