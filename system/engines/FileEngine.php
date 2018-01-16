@@ -23,9 +23,16 @@
       $names = [];
       $paths = array_filter(glob('plugins/*'), 'is_dir');
       foreach($paths as $path) {
-        $names[] = explode('/', $path)[1];
+          $names[] = explode('/', $path)[1];
       }
       return $names;
+    }
+
+    function doesPluginExist($key) {
+      if(file_exists("plugins/*key")) {
+        return true;
+      }
+      return false;
     }
   }
 ?>

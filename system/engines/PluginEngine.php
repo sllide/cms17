@@ -5,13 +5,15 @@
 
     function load($key) {
       if(!$this->key) {
+        if(!$this->engine->database->isPluginEnabled($key)) return false;
         $this->key = $key;
-        $this->plugin = require("plugins//".$this->key."//Plugin.php");
+        $this->plugin = require("plugins/" . $this->key . "/Plugin.php");
         $this->plugin->loadFiles($key);
-        $services = $this->engine->service->getServices($this->plugin->data->services);
+        $services = $this->engine->service->getServices($this->plugin->data->services, $this->key);
         $this->plugin->registerServices($services);
         $this->plugin->tags->registerServices($services);
       }
+      return true;
     }
 
     function getPlugin() {

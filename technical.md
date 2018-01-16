@@ -16,7 +16,9 @@ CMS structure
     * Engine.php
     * Plugin.php
     * PluginData.php
+    * PluginPanel.php
     * PluginTags.php
+    * Service.php
   * cores/ **_extends Core_**
     * websiteCore.php
     * controlCore.php
@@ -31,7 +33,7 @@ CMS structure
     * PostEngine.php
     * PageEngine.php
     * ServiceEngine.php
-  * services/
+  * services/ **_extends Service_**
     * DatabaseService.php
     * TemplateService.php
     * RoutingService.php
@@ -45,6 +47,7 @@ CMS structure
       * panel.html
       * ...
     * plugin.php **_extends Plugin_**
+    * panel.php **_extends PluginPanel_**
     * Data.php **_extends PluginData_**
     * Tags.php **_extends PluginTags_**
   * portfolio/

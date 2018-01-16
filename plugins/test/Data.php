@@ -6,19 +6,19 @@
     public $version = 1;
 
     public $databaseStructure = [
-      "testTableOne" => [
+      "one" => [
         "name" => "TEXT NOT NULL",
         "message" => "TEXT NOT NULL",
         "magicNumber" => "INT NOT NULL",
         "timestamp" => "DATETIME DEFAULT CURRENT_TIMESTAMP",
       ],
-      "testTableTwo" => [
+      "two" => [
         "abc" => "TEXT NOT NULL",
         "def" => "TEXT NOT NULL",
         "ghi" => "TEXT NOT NULL",
       ],
     ];
 
-    public $services = ['template', 'file'];
+    public $services = ['template', 'file', 'database'];
   }
 ?>

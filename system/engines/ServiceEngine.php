@@ -1,25 +1,29 @@
 <?php
   class ServiceEngine extends Engine {
 
-    public function getServices($services) {
+    public function getServices($services, $key) {
       $this->serviceList = new stdClass();
       //if plugin isnt intialized yet do so
       foreach($services as $service) {
           if(!isset($serviceArray[$service])) {
-            $this->loadService($service);
+            $this->loadService($service, $key);
           }
       }
       return $this->serviceList;
     }
 
-    private function loadService($key) {
-      switch($key) {
+    private function loadService($service, $key) {
+      switch($service) {
         case 'template':
-          $this->serviceList->template = new TemplateService($this->engine, 'test');
+          $this->serviceList->template = new TemplateService($this->engine, $key);
           break;
         case 'file':
-          $this->serviceList->file = new FileService($this->engine, 'test');
-          break;
+            $this->serviceList->file = new FileService($this->engine, $key);
+            break;
+        case 'database':
+            $this->serviceList->database = new DatabaseService($this->engine, $key);
+            $this->serviceList->database->initialize();
+            break;
       }
     }
   }

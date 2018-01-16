@@ -34,6 +34,13 @@
       $this->title = $this->username = $this->password = "";
       $this->titleError = $this->usernameError = $this->passwordError = "";
 
+      $this->title = "Jari.xyz";
+      $this->username = "jari";
+      $this->password = "password";
+      $this->installSystem();
+      $this->engine->install->installPlugin('test');
+      header("location:/");
+
       //all form data is correct, install system
       if($this->validateForm()) {
         $this->installSystem();
@@ -58,9 +65,6 @@
 
       $data = ['title', $this->title];
       $this->engine->database->insertIntoTable('tags', $data);
-
-      $data = ['test', true];
-      $this->engine->database->insertIntoTable('plugins', $data);
 
       $data = ['Home', "home", "Content will end up here!", "index", "test", 1];
       $this->engine->database->insertIntoTable('pages', $data);

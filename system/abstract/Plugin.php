@@ -15,6 +15,7 @@
       $this->tags = require("plugins/$key/Tags.php");
     }
 
+    public abstract function install();
     public abstract function initialize();
     public abstract function build();
     public abstract function handleRequest($post);

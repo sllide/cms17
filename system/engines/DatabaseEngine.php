@@ -3,8 +3,8 @@
 
     private $db;
 
-    function connect() {
-      $this->db = new PDO('sqlite:system/database.db');
+    function connect($path) {
+      $this->db = new PDO("sqlite:$path.db");
       $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
@@ -30,7 +30,6 @@
     }
 
     function insertIntoTable($table, $data) {
-      //pdo doesnt allow binding parameters other than values
       $q = "INSERT INTO $table VALUES(";
       for($i=0;$i<count($data);$i++) {
         $q .= "?,";
@@ -42,6 +41,36 @@
       //bind data
       for($i=0;$i<count($data);$i++) {
         $s->bindParam($i+1, $data[$i]);
+      }
+
+      $s->execute();
+      return $this->db->lastInsertId();
+    }
+
+    function insertStructIntoTable($table, $data) {
+      $q = "INSERT INTO $table (";
+      foreach($data as $key => $value) {
+        $q .= "" . $key . ",";
+      }
+
+      $q = substr($q,0,strlen($q)-1) . ") VALUES (";
+
+      foreach($data as $key => $value) {
+        $q .= ":" . $key . ",";
+      }
+
+      $q = substr($q,0,strlen($q)-1) . ")";
+      
+      $s = $this->db->prepare($q);
+
+      $i = 0;
+      $keys = [];
+      $values = [];
+      foreach($data as $key => $value) {
+        $keys[$i] = $key;
+        $values[$i] = $value;
+        $s->bindParam(":".$keys[$i], $values[$i]);
+        $i++;
       }
 
       $s->execute();
@@ -72,6 +101,45 @@
       $s->bindParam(1,$key);
       $s->execute();
       return $s->fetch();
+    }
+
+    function doesPluginExist($key) {
+        $q = "SELECT * FROM plugins WHERE key = ?";
+        $s = $this->db->prepare($q);
+        $s->bindParam(1,$key);
+        $s->execute();
+        return (bool) count($s->fetchAll());
+    }
+
+    function updatePlugin($key, $enabled) {
+        if($this->doesPluginExist($key)) {
+          $q = "UPDATE plugins SET enabled = ? WHERE key = ?";
+          $s = $this->db->prepare($q);
+          $s->bindParam(1,$enabled);
+          $s->bindParam(2,$key);
+          $s->execute();
+        } else {
+          $q = "INSERT INTO plugins (key, enabled) VALUES(?,?)";
+          $s = $this->db->prepare($q);
+          $s->bindParam(2,$enabled);
+          $s->bindParam(1,$key);
+          $s->execute();
+        }
+    }
+
+    function isPluginEnabled($key) {
+      $q = "SELECT * FROM plugins WHERE enabled = 1 AND key = ?";
+      $s = $this->db->prepare($q);
+      $s->bindParam(1,$key);
+      $s->execute();
+      return (bool) count($s->fetchAll());
+    }
+
+    function attachPluginDatabase($key) {
+      $q = "ATTACH DATABASE $key AS plugin";
+      $s = $this->db->prepare($q);
+      $s->execute();
+      return (bool) count($s->fetchAll());
     }
   }
 ?>
