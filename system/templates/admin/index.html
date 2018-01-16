@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
   <!-- Bulma Version 0.6.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" integrity="sha256-HEtF7HLJZSC3Le1HcsWbz1hDYFPZCqDhZa9QsCgVUdw=" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="/admin.css">
 </head>
 <body>
 
@@ -18,7 +19,11 @@
         <div class="navbar-item brand-text">
           CMS17 control panel
         </div>
-        <a class="navbar-item">Logout</a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item">Logout</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -26,7 +31,9 @@
   <div class="container">
     <div class="columns">
       <div class="column is-3">
-        @sidebar@
+          <aside class="menu">
+              @navigation@
+          </aside>
       </div>
       <div class="column is-9">
         @page@

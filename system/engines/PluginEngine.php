@@ -6,6 +6,7 @@
     function load($key) {
       if(!$this->key) {
         if(!$this->engine->database->isPluginEnabled($key)) return false;
+        if(!$this->engine->file->doesPluginExist($key)) return false;
         $this->key = $key;
         $this->plugin = require("plugins/" . $this->key . "/Plugin.php");
         $this->plugin->loadFiles($key);
@@ -14,6 +15,11 @@
         $this->plugin->tags->registerServices($services);
       }
       return true;
+    }
+
+    function unload() {
+      $this->key = false;
+      unset($this->plugin);
     }
 
     function getPlugin() {

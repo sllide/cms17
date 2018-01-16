@@ -95,6 +95,18 @@
       return $s->fetchAll();
     }
 
+    function getEnabledPlugins() {
+      $q = "SELECT * FROM plugins WHERE enabled = 1";
+      $s = $this->db->prepare($q);
+      $s->execute();
+      $data = $s->fetchAll();
+      $tags = [];
+      foreach($data as $row) {
+        $tags[] = $row['key'];
+      }
+      return $tags;
+    }
+
     function getPageByKey($key) {
       $q = "SELECT * FROM pages WHERE path = ?";
       $s = $this->db->prepare($q);

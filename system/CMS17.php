@@ -13,6 +13,11 @@
         $this->bootInstaller();
         return;
       }
+      if($this->engine->routing->isAdmin()) {
+        $this->bootAdmin();
+        return;
+      }
+
       $this->bootWebsite();
     }
 
@@ -25,6 +30,13 @@
 
     function bootInstaller() {
       $this->core = new InstallerCore();
+      $this->core->registerEngines($this->engine);
+      $this->core->initialize();
+      echo $this->core->build();
+    }
+
+    function bootAdmin() {
+      $this->core = new AdminCore();
       $this->core->registerEngines($this->engine);
       $this->core->initialize();
       echo $this->core->build();

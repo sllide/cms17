@@ -2,7 +2,7 @@
   return new class extends PluginPanel {
 
     function build() {
-      return "Hello from test plugin panel.";
+      return "Hello from tester plugin panel.";
     }
 
     function handleRequest($post) {

@@ -1,6 +1,6 @@
 <?php
   class RoutingEngine extends Engine {
-    private $page, $action, $extra;
+    private $page, $action, $extra, $admin;
 
     function initialize() {
       //initialize route as "" to ensure it doesnt return invalid values
@@ -13,6 +13,7 @@
       //remove admin from route
       if(isset($path[0]) && $path[0] == 'admin') {
         array_shift($path);
+        $this->admin = true;
       }
 
       if(isset($path[0])) {
@@ -43,6 +44,10 @@
 
     function getExtra() {
       return $this->extra;
+    }
+
+    function isAdmin() {
+      return $this->admin;
     }
   }
 ?>

@@ -29,7 +29,7 @@
     }
 
     function doesPluginExist($key) {
-      if(file_exists("plugins/*key")) {
+      if(file_exists("plugins/$key")) {
         return true;
       }
       return false;

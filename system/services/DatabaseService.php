@@ -13,6 +13,7 @@
     }
 
     function getTableData($table) {
+      if(!is_integer(array_search($table, $this->tables))) die("plugin tried to access table it hasnt registered.");
       $key = $this->pluginKey;
       $q = "SELECT * FROM $key"."_".$table;
       $s = $this->db->prepare($q);
@@ -21,10 +22,12 @@
     }
 
     function insertIntoTable($table, $data) {
+      if(!is_integer(array_search($table, $this->tables))) die("plugin tried to access table it hasnt registered.");
       $this->engine->database->insertIntoTable($this->pluginKey."_".$table, $data);
     }
 
     function insertStructIntoTable($table, $data) {
+      if(!is_integer(array_search($table, $this->tables))) die("plugin tried to access table it hasnt registered.");
       $this->engine->database->insertStructIntoTable($this->pluginKey."_".$table, $data);
     }
 

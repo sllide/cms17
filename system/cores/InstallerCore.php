@@ -39,7 +39,9 @@
       $this->password = "password";
       $this->installSystem();
       $this->engine->install->installPlugin('test');
-      header("location:/");
+      $this->engine->install->installPlugin('tester');
+      echo "Installed test system";
+      die;
 
       //all form data is correct, install system
       if($this->validateForm()) {
