@@ -2,17 +2,12 @@
   abstract class PluginData {
     public final function __construct() {}
 
-    public abstract function getName();
-    public abstract function getDescription();
-    public abstract function getAuthor();
-    public abstract function getVersion();
+    public $name = "Something";
+    public $description = "Has a purpose";
+    public $author = "Somebody";
+    public $version = 9001;
 
-    public abstract function hasConfigPanel();
-
-    public abstract function getTableNames();
-    public abstract function getNeededServices();
-    public abstract function getTags();
-
-    public abstract function registerTableStructure($table, Callable $registerer);
+    public $databaseStructure = [];
+    public $services = [];
   }
 ?>

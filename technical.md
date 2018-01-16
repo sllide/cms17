@@ -104,6 +104,9 @@ This is where the main content of the active page is loaded.
 ----------
 Here links will be made for all enabled pages. It will have a template that gets inserted for every page. The template itself will support the tags **@path@** for the link itself and **@name@** for a readable page title.
 
+@pageKey@
+----------
+This tag will report the invoked page key.
 
 Plugin Structure
 ==========
@@ -132,8 +135,6 @@ All plugin meta data will be described here. Wich services are needed. What thei
 |getVersion()|Double|return plugin version
 |getDataStructure()|two dimentional dictionary|return database structure
 |getNeededServices()|String array|return services plugin requires
-|getConfigName()|String or False|return string pointing to template function or false if there is no panel
-|getPublicTags()|String array|return all tag names that are accessable from outside the plugin
 
 Tags.php _(extends PluginTags)_
 -----------

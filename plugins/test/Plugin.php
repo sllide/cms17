@@ -1,23 +1,15 @@
 <?php
   return new class extends Plugin {
 
-    function initPlugin() {
-      $this->data = "initted";
+    function initialize() {
+      $this->data = "@welcomeMessage@";
     }
 
-    function initConfig() {
-
+    function build() {
+      return $this->service->template->buildTemplate($this->data);
     }
 
-    function buildTag($tagName) {
-      return "built $tagName " . $this->data;
-    }
-
-    function doPost($post) {
-
-    }
-
-    function doConfigPost($post) {
+    function handleRequest($post) {
 
     }
   }

@@ -2,19 +2,14 @@
   class TagEngine extends Engine {
     private $tagList = [];
 
-    function registerPluginTag($tag, $plugin) {
-      if(isset($this->tagList[$tag])) return;
-      $this->tagList[$tag] = ['type' => 'plugin', 'value' => $plugin];
-    }
-
     function registerDataTag($tag, $value) {
       if(isset($this->tagList[$tag])) return;
       $this->tagList[$tag] = ['type' => 'data', 'value' => $value];
     }
 
-    function registerSystemTag($tag, Callable $value) {
+    function registerFunctionTag($tag, Callable $value) {
       if(isset($this->tagList[$tag])) return;
-      $this->tagList[$tag] = ['type' => 'system', 'value' => $value];
+      $this->tagList[$tag] = ['type' => 'function', 'value' => $value];
     }
 
     function getTagValue($tagName) {
@@ -28,15 +23,9 @@
         return $tag['value'];
       }
 
-      if($tag['type'] == 'system') {
+      if($tag['type'] == 'function') {
         return $tag['value']();
       }
-
-      return $this->engine->plugin->getPluginTagValue($tag['value'], $tagName);
-    }
-
-    function getTagList() {
-      return $this->tagList;
     }
   }
 ?>

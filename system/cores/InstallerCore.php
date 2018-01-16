@@ -11,20 +11,21 @@
         "name" => "TEXT NOT NULL",
         "value" => "TEXT NOT NULL",
       ],
-      "plugins" => [
-        "key" => "TEXT NOT NULL",
-        "enabled" => "INT NOT NULL",
-      ],
       "log" => [
         "invoker" => "TEXT NOT NULL",
         "type" => "TEXT NOT NULL",
         "message" => "TEXT NOT NULL",
       ],
+      "plugins" => [
+        "key" => "TEXT NOT NULL",
+        "enabled" => "BOOLEAN NOT NULL",
+      ],
       "pages" => [
+        "title" => "TEXT NOT NULL",
         "path" => "TEXT NOT NULL",
-        "name" => "TEXT NOT NULL",
         "content" => "TEXT NOT NULL",
-        "templateName" => "TEXT NOT NULL",
+        "template" => "TEXT NOT NULL",
+        "pluginKey" => "TEXT",
         "enabled" => "BOOLEAN NOT NULL DEFAULT 0",
       ],
     ];
@@ -36,6 +37,7 @@
       //all form data is correct, install system
       if($this->validateForm()) {
         $this->installSystem();
+        header("location:/");
         die;
       }
 
@@ -43,8 +45,8 @@
     }
 
     function installSystem() {
-      foreach($this->systemTables as $table => $data) {
-        $this->engine->database->createTable($table, $data);
+      foreach($this->systemTables as $table => $structure) {
+        $this->engine->database->createTable($table, $structure);
       }
 
       //manipulate data for insertion
@@ -57,30 +59,15 @@
       $data = ['title', $this->title];
       $this->engine->database->insertIntoTable('tags', $data);
 
-      $data = ['navigationLink', $this->engine->file->getSystemTemplate('navigationLink')];
-      $this->engine->database->insertIntoTable('templates', $data);
-      $data = ['index', $this->engine->file->getSystemTemplate('default')];
-      $templateID = $this->engine->database->insertIntoTable('templates', $data);
-
-      $data = ['home', "Home", "Content will end up here!", $templateID, 1];
-      $this->engine->database->insertIntoTable('pages', $data);
-
-      $data = ['test', 1];
+      $data = ['test', true];
       $this->engine->database->insertIntoTable('plugins', $data);
 
-      //return to website after installing
-      header("location:/");
+      $data = ['Home', "home", "Content will end up here!", "index", "test", 1];
+      $this->engine->database->insertIntoTable('pages', $data);
     }
 
     function registerTags() {
-      //if database has data bind warning template to tag else bind empty tag
-      if($this->engine->database->hasData()) {
-        $this->engine->tag->registerDataTag('warning', $this->engine->file->getSystemTemplate("setup/warning"));
-      } else {
-        $this->engine->tag->registerDataTag('warning', '');
-      }
-
-      $this->engine->tag->registerDataTag('form', $this->engine->file->getSystemTemplate("setup/form"));
+      $this->engine->tag->registerDataTag('form', $this->engine->file->getTemplate("setup/form"));
       $this->engine->tag->registerDataTag("title", $this->title);
       $this->engine->tag->registerDataTag("titleError", $this->titleError);
       $this->engine->tag->registerDataTag("username", $this->username);
@@ -131,7 +118,7 @@
     }
 
     function build() {
-      $template = $this->engine->file->getSystemTemplate("setup/index");
+      $template = $this->engine->file->getTemplate("setup/index");
       return $this->engine->template->buildTemplate($template);
     }
   }

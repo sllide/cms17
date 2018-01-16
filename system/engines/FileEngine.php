@@ -1,11 +1,13 @@
 <?php
   class FileEngine extends Engine {
 
-    function getSystemTemplate($path) {
+    function getTemplate($path) {
       $path = "system/templates/$path.html";
       if(file_exists($path)) {
         return file_get_contents($path);
       }
+
+      return "Template $path not found.";
     }
 
     function getAllPluginNames() {
