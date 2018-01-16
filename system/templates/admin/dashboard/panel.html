@@ -2,10 +2,10 @@
    <div class="hero-body">
      <div class="container">
        <h1 class="title">
-         Hi!
+         Welcome admin!
        </h1>
        <h2 class="subtitle">
-         This whole panel is temporary and will most likely change.
+         Enjoy the slick control panel.
        </h2>
      </div>
    </div>
@@ -28,20 +28,23 @@
   </div>
 </section>
 
-<section class="section">
+<section>
   <div class="card events-card">
     <header class="card-header">
       <p class="card-header-title">
-        Notices
+        Message log
       </p>
     </header>
-    <div class="card-table">
+    <div class="table">
       <div class="content">
-        <table class="table is-fullwidth is-striped">
+        <table class="table is-fullwidth">
+          <thead>
+            <tr><td>Invoker</td><td>Type</td><td>Message</td><tr>
+          </thead>
           <tbody>
-            <tr><td>Hello</td></tr>
-            <tr><td>This is notice!</td></tr>
-            <tr><td>So is this.</td></tr>
+            <tr class="is-selected"><td>PluginEngine</td><td>Error</td><td>Plugin 'test' requires non-existant service 'fantasy'.</td></tr>
+            <tr><td>DatabaseService</td><td>Warning</td><td>Plugin 'test' tried to access unregistered table table.</td></tr>
+            <tr><td>PluginEngine</td><td>Error</td><td>Plugin 'test' requires non-existant service 'fantasy'.</td></tr>
           </tbody>
         </table>
       </div>

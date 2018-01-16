@@ -26,5 +26,13 @@
             break;
       }
     }
+
+    public function getLocalTemplateEngine() {
+      $class = new stdClass();
+      $class->template = new TemplateEngine($class);
+      $class->tag = new TagEngine($class);
+      $class->tag->unlock();
+      return $class;
+    }
   }
 ?>

@@ -10,7 +10,6 @@
     }
 
     function createCustomTagEngine() {
-
       return new class() {
 
         function getTagValue($tag) {

@@ -8,7 +8,7 @@
         "level" => "INT NOT NULL DEFAULT 0",
       ],
       "tags" => [
-        "name" => "TEXT NOT NULL",
+        "name" => "TEXT NOT NULL UNIQUE",
         "value" => "TEXT NOT NULL",
       ],
       "log" => [
@@ -40,7 +40,7 @@
       $this->installSystem();
       $this->engine->install->installPlugin('test');
       $this->engine->install->installPlugin('tester');
-      echo "Installed test system";
+      echo "System install completed.";
       die;
 
       //all form data is correct, install system

@@ -1,9 +1,15 @@
 <?php
   class TagEngine extends Engine {
     private $tagList = [];
+    private $locked = true;
+
+
+    function unlock() {
+      $this->locked = false;
+    }
 
     function registerDataTag($tag, $value) {
-      if(isset($this->tagList[$tag])) return;
+      if($this->locked && isset($this->tagList[$tag])) return;
       $this->tagList[$tag] = ['type' => 'data', 'value' => $value];
     }
 

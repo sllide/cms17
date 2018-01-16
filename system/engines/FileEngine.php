@@ -34,5 +34,12 @@
       }
       return false;
     }
+
+    function getPluginData($key) {
+      if(file_exists("plugins/$key/Data.php")) {
+        return require("plugins/$key/Data.php");
+      }
+      return false;
+    }
   }
 ?>

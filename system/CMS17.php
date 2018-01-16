@@ -17,6 +17,10 @@
         $this->bootAdmin();
         return;
       }
+      if($this->engine->routing->isPost()) {
+        $this->bootPost();
+        return;
+      }
 
       $this->bootWebsite();
     }
@@ -40,6 +44,13 @@
       $this->core->registerEngines($this->engine);
       $this->core->initialize();
       echo $this->core->build();
+    }
+
+    function bootPost() {
+      $this->core = new PostCore();
+      $this->engine->post = new PostEngine($this->engine);
+      $this->core->registerEngines($this->engine);
+      $this->core->initialize();
     }
 
     function initializeEngines() {

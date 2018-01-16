@@ -1,53 +1,57 @@
 <?php
   class RoutingEngine extends Engine {
-    private $page, $action, $extra, $admin;
+    private $admin, $post, $path;
 
     function initialize() {
-      //initialize route as "" to ensure it doesnt return invalid values
-      $this->page = $this->action = $this->extra = "";
-
       //remove outer slashes to clean the path
       $path = trim($_SERVER['REQUEST_URI'], "/");
-      $path = explode("/", $path);
+      $this->path = explode("/", $path);
 
       //remove admin from route
-      if(isset($path[0]) && $path[0] == 'admin') {
-        array_shift($path);
+      if(isset($this->path[0]) && $this->path[0] == 'admin') {
+        array_shift($this->path);
         $this->admin = true;
       }
 
-      if(isset($path[0])) {
-        $this->page = $path[0];
-
-        if(isset($path[1])) {
-          $this->action = $path[1];
-
-          if(isset($path[2])) {
-            $this->extra = $path[2];
-          }
-        }
+      if(isset($this->path[0]) && $this->path[0] == 'post') {
+        array_shift($this->path);
+        $this->post = true;
       }
 
       //add page if it isnt extracted from the uri
-      if($this->page == "") {
-        $this->page = 'home';
+      if(empty($this->path[0])) {
+        $this->path[0] = "home";
       }
     }
 
     function getPage() {
-      return $this->page;
+      if(isset($this->path[0])) {
+        return $this->path[0];
+      }
     }
 
     function getAction() {
-      return $this->action;
+      if(isset($this->path[1])) {
+        return $this->path[1];
+      }
     }
 
     function getExtra() {
-      return $this->extra;
+      if(isset($this->path[2])) {
+        return $this->path[2];
+      }
     }
 
     function isAdmin() {
       return $this->admin;
+    }
+
+    function isPost() {
+      return $this->post;
+    }
+
+    function getPath() {
+      return $this->path;
     }
   }
 ?>
