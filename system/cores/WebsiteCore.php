@@ -29,7 +29,7 @@
 
     function pluginContent() {
       $this->engine->plugin->load($this->page['pluginKey']);
-      return $this->engine->plugin->getContent();
+      return $this->engine->plugin->getPlugin()->build();
     }
 
     function navigation() {

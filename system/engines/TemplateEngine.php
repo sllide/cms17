@@ -16,7 +16,7 @@
         //get the tag replacement
         $tagValue = $this->engine->tag->getTagValue($tagName);
 
-        //if tag value equels false and it isnt a string report missing tag.
+        //if tag value equals false and it isnt a string report missing tag.
         //Note: an empty string is equal to false, hence the string check
         if($tagValue == false && !is_string($tagValue)) {
           $tagValue = "Tag $tagName not found.";
