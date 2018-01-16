@@ -16,6 +16,10 @@
       switch($key) {
         case 'template':
           $this->serviceList->template = new TemplateService($this->engine, 'test');
+          break;
+        case 'file':
+          $this->serviceList->file = new FileService($this->engine, 'test');
+          break;
       }
     }
   }

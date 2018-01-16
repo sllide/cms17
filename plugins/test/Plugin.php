@@ -2,11 +2,10 @@
   return new class extends Plugin {
 
     function initialize() {
-      $this->data = "@welcomeMessage@";
     }
 
     function build() {
-      return $this->service->template->buildTemplate($this->data);
+      return $this->service->template->buildTemplate("@welcomeMessage@");
     }
 
     function handleRequest($post) {

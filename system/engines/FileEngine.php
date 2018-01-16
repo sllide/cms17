@@ -10,6 +10,15 @@
       return "Template $path not found.";
     }
 
+    function getFile($path) {
+        $path = "$path.html";
+        if(file_exists($path)) {
+            return file_get_contents($path);
+        }
+
+        return "";
+    }
+
     function getAllPluginNames() {
       $names = [];
       $paths = array_filter(glob('plugins/*'), 'is_dir');

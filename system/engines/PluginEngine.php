@@ -10,6 +10,7 @@
         $this->plugin->loadFiles($key);
         $services = $this->engine->service->getServices($this->plugin->data->services);
         $this->plugin->registerServices($services);
+        $this->plugin->tags->registerServices($services);
       }
     }
 

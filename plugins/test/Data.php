@@ -19,6 +19,6 @@
       ],
     ];
 
-    public $services = ['template'];
+    public $services = ['template', 'file'];
   }
 ?>
