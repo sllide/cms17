@@ -10,7 +10,7 @@
     function sendToPanel($data) {
       if($data['panel'] == "tag") {
         $panel = new TagPanel($this->engine);
-        $panel->handleRequest($data);
+        return $panel->handleRequest($data);
       }
     }
 

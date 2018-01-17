@@ -31,7 +31,8 @@
     function handleRequest($post) {
       if(!isset($post['action'])) return false;
       if($post['action'] == "new" && isset($post['tagName']) && isset($post['tagValue'])) {
-        $this->engine->database->insertIntoTable('tags', [$post['tagName'], $post['tagValue']]);
+        $id = $this->engine->database->insertIntoTable('tags', [$post['tagName'], $post['tagValue']]);
+        return [$post['tagName'], $post['tagValue']];
       }
     }
   }
