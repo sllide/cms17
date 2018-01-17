@@ -1,6 +1,47 @@
-<section>
-  <a class="button is-success" href="/admin/tags/new">New tag</a>
-</section>
+<script>
+    function submit() {
+        var data = $('#form').serializeArray();
+        var url = "/post/";
+        $.each(data, function(key, field) {
+            url += field['name']+"/"+field['value']+"/";
+        });
+        $.ajax({
+            url: url,
+            success: function(result) {
+                console.log(result);
+                $('table tbody').append("<tr><td>"+result[0]+"</td><td>"+result[1]+"</td><td class='has-text-right'><a class='button is-primary'>Edit</a> <a class='button is-danger'>Delete</a></td><tr>");
+            }
+        });
+    }
+</script>
+
+<form id="form">
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <input name="panel" value="tag" type="hidden" placeholder="Text input" required>
+                <input name="action" value="new" type="hidden" placeholder="Text input" required>
+                <label class="label">Tag title</label>
+                <div class="control">
+                    <input class="input" name="tagName" type="text" placeholder="Text input" required>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="field">
+                <label class="label">Tag value</label>
+                <div class="control">
+                    <input class="input" name="tagValue" type="text" placeholder="Text input" required>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="control centered">
+                <a onclick="submit()" class="button is-link">Create tag</a>
+            </div>
+        </div>
+    </div>
+</form>
 
 <section class="section">
     <div class="table">
