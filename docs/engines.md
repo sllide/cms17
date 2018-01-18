@@ -41,3 +41,4 @@ Services are abstracted layers between plugins and engines. As engines have full
 
 Template
 ----------
+The template engine will find tags and invoke the callback linked to that tag. Previously tags where useable for as many times as needed but this has been changed to a one time use for extra flexibility concerning callbacks this also disallows tag loops to happen.
