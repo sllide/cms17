@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>@title@</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+    <div class="container is-fluid">
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <img class="is-hidden-mobile" src="/images/title.png" alt="@title@" />
+            <img class="is-hidden-tablet" src="/images/mobileTitle.png" alt="@title@" />
+          </div>
+        </div>
+        <div class="level-right">
+          <div class="level-item">
+            @navigation@
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container mainContent">
+      <img class="floatImage" style="left: -200px; top: 100px;" src="/images/triforce.png" alt="" />
+      <img class="floatImage" style="right: -250px; top: 200px;" src="/images/block.png" alt="" />
+      <img class="floatImage" style="left: -250px; top: 400px;" src="/images/carrot.png" alt="" />
+      <img class="floatImage" style="right: -200px; top: 5px;" src="/images/s.png" alt="" />
+      <section class="section">
+        @content@
+      </section>
+      <section class="section">
+        @pluginContent@
+      </section>
+    </div>
+
+  </body>
+</html>

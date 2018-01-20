@@ -1,0 +1,17 @@
+html {
+  background-image: url("/images/background.png");
+}
+
+.mainContent {
+  position: relative;
+}
+
+.floatImage {
+  position: absolute;
+}
+
+.container.is-fluid {
+  margin-left: 32px;
+  margin-right: 32px;
+  !important
+}
