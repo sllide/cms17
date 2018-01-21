@@ -23,7 +23,7 @@
         //only require service if it extends AbstractService
         if(get_parent_class($service) == "AbstractService") {
           $this->services[$name] = $service;
-          $this->services[$name]->loader = $this;
+          $this->services[$name]->loader = $this->loader;
         } else {
           $this->loader->get('log')->error("Service $name does not extend AbstractService");
           return false;
@@ -39,7 +39,7 @@
     private function getRequestor($name) {
       $path = explode('\\',debug_backtrace()[1]['file']);
       if($offset = array_search("plugins", $path)) {
-        return ['plugin' => $path[$offset+1]];
+        return $path[$offset+1];
       }
     }
   }

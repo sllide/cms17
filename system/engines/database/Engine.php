@@ -6,7 +6,7 @@
       $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $this->system = $this->loader->get('file')->getExtention('System');
       $this->system->db = $this->db;
-       
+
     }
 
     function createTable($table, $data) {
@@ -19,6 +19,14 @@
 
       $s = $this->db->prepare($q);
       $s->execute();
+    }
+
+    function getAllFromTable($table) {
+      //pdo doesnt allow binding parameters other than values
+      $q = "SELECT * FROM $table";
+      $s = $this->db->prepare($q);
+      $s->execute();
+      return $s->fetchAll();
     }
 
     function insertIntoTable($table, $data) {

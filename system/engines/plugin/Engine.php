@@ -31,6 +31,10 @@
       }
     }
 
+    function build() {
+      return $this->plugin->build();
+    }
+
     function unload() {
       unset($this->plugin);
     }

@@ -44,7 +44,9 @@
 
     function pluginContent() {
       if($this->page['pluginKey']) {
-        return "plugin! " . $this->page['pluginKey'];
+        $key = $this->page['pluginKey'];
+        $this->loader->get('plugin')->load($key);
+        return $this->loader->get('plugin')->build();
       }
       return "";
     }
