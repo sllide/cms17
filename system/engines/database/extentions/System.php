@@ -38,6 +38,20 @@
       return false;
     }
 
+    function getEnabledPlugins() {
+      $q = "SELECT * FROM plugins WHERE enabled = 1";
+      $s = $this->db->prepare($q);
+      $s->execute();
+      return $s->fetchAll();
+    }
+
+    function getAllPlugins() {
+      $q = "SELECT * FROM plugins";
+      $s = $this->db->prepare($q);
+      $s->execute();
+      return $s->fetchAll();
+    }
+
     function getPage($path) {
       $q = "SELECT * FROM pages WHERE path = :path AND enabled = 1";
       $s = $this->db->prepare($q);

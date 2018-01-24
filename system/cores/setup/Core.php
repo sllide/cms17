@@ -66,7 +66,7 @@
 
       $data = ['Home', "home", "Content will end up here!", "index", "", 1];
       $this->loader->get('database')->insertIntoTable('pages', $data);
-      $data = ['Trash', "trash", "Look below for the plugin :)", "index", "trash", 1];
+      $data = ['Trash', "trash", "Look below for the trash plugin!", "index", "trash", 1];
       $this->loader->get('database')->insertIntoTable('pages', $data);
     }
 

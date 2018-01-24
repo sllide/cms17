@@ -5,7 +5,7 @@
       $this->tagList = $this->loader->get('file')->getExtention('TagList');
       $this->tagList->log = $this->loader->get('log');
       $this->linkResolver = $this->loader->get('file')->getExtention('LinkResolver');
-       
+
     }
 
     function addTag($name, callable $callback) {
@@ -25,12 +25,12 @@
     }
 
     function buildTemplate($template) {
-      $template = $this->findAndReplaceQueue($template);
+      $template = $this->findAndReplaceTags($template);
       $template = $this->resolveLinks($template);
       return $template;
     }
 
-    private function findAndReplaceQueue($template) {
+    private function findAndReplaceTags($template) {
       while(true) {
         preg_match("/@@[a-zA-Z]+@@/", $template, $match, PREG_OFFSET_CAPTURE);
         if(empty($match)) {
@@ -42,7 +42,7 @@
         $tagOffset = $match[0][1];
 
         $tag = $this->tagList->getTagContent($tagName);
-        if(gettype($tag) != "string") {
+        if(gettype($tag) == "Boolean" || gettype($tag) == "NULL") {
           $this->loader->get('log')->notice("Cant resolve tag <b>$tagName</b>");
           $template = substr_replace($template, "", $tagOffset, $tagLength);
         } else {

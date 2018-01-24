@@ -27,7 +27,9 @@
     public function getExtention($name) {
       $path = $this->getBasePath();
       if(file_exists("$path/extentions/$name.php")) {
-        return require_once("$path/extentions/$name.php");
+        $extention = require_once("$path/extentions/$name.php");
+        $extention->loader = $this->loader;
+        return $extention;
       }
       $this->loader->get('log')->error("Cannot load extention <b>$name</b>, file not found.");
     }
@@ -37,6 +39,19 @@
         return true;
       }
       return false;
+    }
+
+    public function getAllPluginNames() {
+      $names = [];
+      $paths = array_filter(glob('plugins/*'), 'is_dir');
+      foreach($paths as $path) {
+          $names[] = explode('/', $path)[1];
+      }
+      return $names;
+    }
+
+    public function getPluginData($name) {
+      return require("plugins/$name/Data.php");
     }
   }
 ?>

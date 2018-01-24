@@ -8,6 +8,5 @@
     public $version = 9001;
 
     public $databaseStructure = [];
-    public $services = [];
   }
 ?>

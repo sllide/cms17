@@ -1,7 +1,7 @@
 <?php
   return new class extends AbstractEngine {
     private $direct = true;
-    private $backtrace = true;
+    private $backtrace = false;
 
     const TYPE_NOTICE = 1;
     const TYPE_WARNING = 2;
@@ -86,7 +86,7 @@
         case $this::TYPE_PHP_ERROR:
           return 'PHP error';
         default:
-          return 'Unknown error';
+          return 'Unknown error type';
       }
     }
   }
