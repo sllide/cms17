@@ -2,7 +2,7 @@
   return new class extends AbstractEngine{
 
     function init(){
-       
+
     }
 
     private function getBasePath() {
@@ -11,6 +11,7 @@
 
       if($type == 'core') { return "system/cores/$system"; }
       if($type == 'engine') { return "system/engines/$system"; }
+      if($type == 'plugin') { return "plugins/$system"; }
 
       $this->loader->get('log')->error("Unhandled base path. Unknown system type $type");
     }

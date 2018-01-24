@@ -1,6 +1,7 @@
 <?php
   return new class extends AbstractEngine {
     private $direct = true;
+    private $backtrace = true;
 
     const TYPE_NOTICE = 1;
     const TYPE_WARNING = 2;
@@ -41,6 +42,16 @@
       echo "<div style='padding: 2px 0px 5px 5px; margin:0px; background-color: $color;'>";
         echo "<div style='padding-bottom: 3px; color: white;'><b>$invoker</b> raised $error</div>";
         echo "<div style='padding: 2px; background-color: white'>$message</div>";
+        if($this->backtrace) {
+          echo "<pre style='padding: 2px; background-color: white'>";
+          foreach(debug_backtrace() as $step) {
+            $line = $step['line'];
+            $path = explode("cms17",$step['file'])[1];
+            $function = $step['function'];
+            echo "$path [$line: $function]<br />";
+          }
+          echo "</pre>";
+        }
       echo "</div>";
     }
 

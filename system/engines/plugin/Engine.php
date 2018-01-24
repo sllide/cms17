@@ -3,9 +3,6 @@
     private $plugin;
 
     function init() {
-
-      $this->serviceLoader = require_once("system/ServiceLoader.php");
-      $this->serviceLoader->loader = $this->loader;
     }
 
     function load($name) {
@@ -22,7 +19,7 @@
 
       if(get_parent_class($plugin) == "AbstractPlugin") {
         $this->plugin = $plugin;
-        $this->plugin->loader = $this->serviceLoader;
+        $this->plugin->loader = $this->loader;
         $this->plugin->init();
         return true;
       } else {

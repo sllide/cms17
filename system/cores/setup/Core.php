@@ -28,7 +28,7 @@
 
     function init() {
       if($this->loader->get('database')->system->hasData()) {
-        //header('location:/');
+        header('location:/');
         die;
       }
 
@@ -38,7 +38,7 @@
       $this->username = "jari";
       $this->password = "password";
       $this->installSystem();
-      //header('location:/');
+      header('location:/');
       die;
 
       $this->template = $this->loader->get('file')->getTemplate('index');
@@ -66,7 +66,7 @@
 
       $data = ['Home', "home", "Content will end up here!", "index", "", 1];
       $this->loader->get('database')->insertIntoTable('pages', $data);
-      $data = ['Trash', "trash", "Look below for the trash plugin :)", "index", "trash", 1];
+      $data = ['Trash', "trash", "Look below for the plugin :)", "index", "trash", 1];
       $this->loader->get('database')->insertIntoTable('pages', $data);
     }
 

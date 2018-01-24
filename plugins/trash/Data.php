@@ -17,7 +17,5 @@
         "maybe" => "TEXT NOT NULL",
       ],
     ];
-
-    public $services = ['database'];
   }
 ?>

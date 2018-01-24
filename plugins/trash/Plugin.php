@@ -5,7 +5,7 @@
     }
 
     public function install() {
-      $this->loader->get('database')->insertIntoTable('cucumber', ["YES", "NO?", "okay"]);
+      $this->loader->get('database')->insertIntoTable('trash__cucumber', ["YES", "NO?", "okay"]);
     }
 
     public function build() {

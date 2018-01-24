@@ -48,6 +48,9 @@
       if($offset = array_search('engines', $path)) {
         return ['type' => 'engine', 'system' => $path[$offset+1]];
       }
+      if($offset = array_search('plugins', $path)) {
+        return ['type' => 'plugin', 'system' => $path[$offset+1]];
+      }
     }
   }
 ?>
