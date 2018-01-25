@@ -24,7 +24,7 @@
       $this->core = require_once("system/cores/$coreName/Core.php");
 
       //pass the engineLoader to the core
-      $this->core->loader = $engineLoader;
+      $this->core->get = [$engineLoader, 'get'];
 
       //initialze and build!
       $this->core->init();

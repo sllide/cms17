@@ -1,17 +1,17 @@
 <?php
-  return new class {
+  return new class extends AbstractExtention {
     function build() {
-      $this->loader->get('template')->addSingleUseTag('totalPlugins', [$this, 'totalPlugins']);
-      $this->loader->get('template')->addSingleUseTag('activePlugins', [$this, 'activePlugins']);
-      return $this->loader->get('file')->getTemplate('dashboard/index');
+      $this->get('template')->addTag('totalPlugins', [$this, 'totalPlugins']);
+      $this->get('template')->addTag('activePlugins', [$this, 'activePlugins']);
+      return $this->get('file')->getTemplate('dashboard/index');
     }
 
     function totalPlugins() {
-      return count($this->loader->get('database')->system->getAllPlugins());
+      return count($this->get('database')->system->getAllPlugins());
     }
 
     function activePlugins() {
-      return count($this->loader->get('database')->system->getEnabledPlugins());
+      return count($this->get('database')->system->getEnabledPlugins());
     }
   }
 ?>

@@ -1,6 +1,5 @@
 <?php
-  abstract class AbstractService {
-    private $loader;
+  abstract class AbstractService extends AbstractBase {
     final function __construct(){}
   }
 ?>

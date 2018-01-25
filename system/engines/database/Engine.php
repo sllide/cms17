@@ -4,7 +4,7 @@
     function init() {
       $this->db = new PDO("sqlite:system/database.db");
       $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $this->system = $this->loader->get('file')->getExtention('System');
+      $this->system = $this->get('file')->getExtention('System');
       $this->system->db = $this->db;
 
     }

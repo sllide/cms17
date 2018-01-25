@@ -1,5 +1,5 @@
 <?php
-  abstract class AbstractCore {
+  abstract class AbstractCore extends AbstractBase {
     public final function __construct() {}
 
     //functions needed to make core work

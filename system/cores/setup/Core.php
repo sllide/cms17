@@ -11,6 +11,7 @@
         "invoker" => "TEXT NOT NULL",
         "type" => "TEXT NOT NULL",
         "message" => "TEXT NOT NULL",
+        "backtrace" => "TEXT NOT NULL",
       ],
       "plugins" => [
         "name" => "TEXT NOT NULL",
@@ -27,7 +28,7 @@
     ];
 
     function init() {
-      if($this->loader->get('database')->system->hasData()) {
+      if($this->get('database')->system->hasData()) {
         header('location:/');
         die;
       }
@@ -41,18 +42,18 @@
       header('location:/');
       die;
 
-      $this->template = $this->loader->get('file')->getTemplate('index');
+      $this->template = $this->get('file')->getTemplate('index');
 
-      $this->loader->get('template')->addDataTag("form", $this->loader->get('file')->getTemplate('form'));
-      $this->loader->get('template')->addDataTag("username", $this->username);
-      $this->loader->get('template')->addDataTag("usernameError", $this->usernameError);
-      $this->loader->get('template')->addDataTag("password", $this->password);
-      $this->loader->get('template')->addDataTag("passwordError", $this->passwordError);
+      $this->get('template')->addDataTag("form", $this->get('file')->getTemplate('form'));
+      $this->get('template')->addDataTag("username", $this->username);
+      $this->get('template')->addDataTag("usernameError", $this->usernameError);
+      $this->get('template')->addDataTag("password", $this->password);
+      $this->get('template')->addDataTag("passwordError", $this->passwordError);
     }
 
     function installSystem() {
       foreach($this->systemTables as $table => $structure) {
-        $this->loader->get('database')->createTable($table, $structure);
+        $this->get('database')->createTable($table, $structure);
       }
 
       //manipulate data for insertion
@@ -60,18 +61,18 @@
       $this->password = password_hash($this->password, PASSWORD_DEFAULT);
 
       $data = [$this->username,$this->password,5];
-      $this->loader->get('database')->insertIntoTable('users', $data);
+      $this->get('database')->insertIntoTable('users', $data);
 
-      $this->loader->get('plugin')->install('trash');
+      $this->get('plugin')->install('trash');
 
       $data = ['Home', "home", "Content will end up here!", "index", "", 1];
-      $this->loader->get('database')->insertIntoTable('pages', $data);
+      $this->get('database')->insertIntoTable('pages', $data);
       $data = ['Trash', "trash", "Look below for the trash plugin!", "index", "trash", 1];
-      $this->loader->get('database')->insertIntoTable('pages', $data);
+      $this->get('database')->insertIntoTable('pages', $data);
     }
 
     function build() {
-      return $this->loader->get('template')->buildTemplate($this->template);
+      return $this->get('template')->buildTemplate($this->template);
     }
   }
 ?>

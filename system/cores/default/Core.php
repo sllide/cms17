@@ -4,18 +4,18 @@
     function init() {
       $this->getPage();
 
-      $this->loader->get('template')->addRequiredTag("content", [$this, "content"]);
-      $this->loader->get('template')->addRequiredTag("navigation", [$this, "navigation"]);
-      $this->loader->get('template')->addRequiredTag("pluginContent", [$this, "pluginContent"]);
+      $this->get('template')->addRequiredTag("content", [$this, "content"]);
+      $this->get('template')->addRequiredTag("navigation", [$this, "navigation"]);
+      $this->get('template')->addRequiredTag("pluginContent", [$this, "pluginContent"]);
 
-      $this->loader->get('template')->addDataTag("title", "Jari.xyz");
+      $this->get('template')->addDataTag("title", "Jari.xyz");
     }
 
     function getPage() {
-      $page = $this->loader->get('router')->getPage();
-      $this->page = $this->loader->get('database')->system->getPage($page);
+      $page = $this->get('router')->getPage();
+      $this->page = $this->get('database')->system->getPage($page);
       if(!$this->page) {
-        $this->loader->get('log')->warning("Page with name $page does not exist, mocking 404 data");
+        $this->get('log')->warning("Page with name $page does not exist, mocking 404 data");
         $this->page = [
           'title' => "404",
           'path' => "404",
@@ -33,7 +33,7 @@
 
     function navigation() {
       $navbar = "";
-      $pages = $this->loader->get('database')->system->getEnabledPages();
+      $pages = $this->get('database')->system->getEnabledPages();
       foreach($pages as $page) {
         $path = $page['path'];
         $title = $page['title'];
@@ -45,15 +45,15 @@
     function pluginContent() {
       if($this->page['pluginKey']) {
         $key = $this->page['pluginKey'];
-        $this->loader->get('plugin')->load($key);
-        return $this->loader->get('plugin')->build();
+        $this->get('plugin')->load($key);
+        return $this->get('plugin')->build();
       }
       return "";
     }
 
     function build() {
-      $template = $this->loader->get('file')->getTemplate($this->page['template']);
-      $template = $this->loader->get('template')->buildTemplate($template);
+      $template = $this->get('file')->getTemplate($this->page['template']);
+      $template = $this->get('template')->buildTemplate($template);
       return $template;
     }
   }

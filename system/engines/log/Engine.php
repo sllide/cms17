@@ -1,7 +1,7 @@
 <?php
   return new class extends AbstractEngine {
     private $direct = true;
-    private $backtrace = false;
+    private $backtrace = true;
 
     const TYPE_NOTICE = 1;
     const TYPE_WARNING = 2;

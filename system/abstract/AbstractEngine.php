@@ -1,6 +1,5 @@
 <?php
-  abstract class AbstractEngine {
-    private $loader;
+  abstract class AbstractEngine extends AbstractBase {
     abstract function init();
   }
 ?>

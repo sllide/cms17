@@ -2,14 +2,14 @@
   return new class extends AbstractCore {
 
     function init() {
-      $params = $this->loader->get('router')->getParameters();
+      $params = $this->get('router')->getParameters();
 
       //if not all parameters are there, return a file not found
       if($params && count($params)<2) { return; }
 
       //get parameters
-      $systemType = $this->loader->get('router')->getPage();
-      $system = $this->loader->get('router')->getAction();
+      $systemType = $this->get('router')->getPage();
+      $system = $this->get('router')->getAction();
       $fileType = $params[0];
       $fileName = $params[1];
 
