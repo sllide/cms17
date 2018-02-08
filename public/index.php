@@ -2,9 +2,15 @@
   //some things need to be setup before cms17 will be able to run. These commands should not be changed
   chdir("..");
 
-  //setup auto loader for abstract classes
+  //setup auto loader for interfaces and engines
   function autoloader($class) {
-    require_once("system/abstract/$class.php");
+    if(file_exists("system/interface/$class.php")) {
+      require_once("system/interface/$class.php");
+      return;
+    }
+    $lowerClass = strtolower($class);
+    require_once("system/engines/$lowerClass/Engine.php");
+    [$class,'__init__']();
   }
   spl_autoload_register('autoloader');
 

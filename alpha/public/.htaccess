@@ -1,9 +1,0 @@
-<IfModule mod_rewrite.c>
-  # enable rewrite engine
-  RewriteEngine On
-
-  # if requested url does not exist pass it as path info to index.php
-  RewriteRule ^$ index.php?/ [QSA,L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule (.*) index.php?/$1 [QSA,L]
-</IfModule>

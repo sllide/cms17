@@ -1,12 +1,12 @@
 <?php
-  return new class extends AbstractPlugin {
+  return new class implements Plug {
     public function init() {
-      $this->get('template')->addTag('rows', [$this, 'rows']);
+      Template::addTag('rows', [$this, 'rows']);
     }
 
     public function rows() {
       $data = "";
-      $rows = $this->get('database')->getAllFromTable('trash__cucumber');
+      $rows = Database::getAllFromTable('trash__cucumber');
       foreach($rows as $row) {
         $data .= print_r($row,true) . "<br />";
       }
@@ -14,12 +14,12 @@
     }
 
     public function install() {
-      $this->get('database')->insertIntoTable('trash__cucumber', ["YES", "NO?", "okay"]);
+      Database::insertIntoTable('trash__cucumber', ["YES", "NO?", "okay"]);
     }
 
     public function build() {
-      $template = $this->get('file')->getTemplate('index');
-      return $this->get('template')->buildTemplate($template);
+      $template = File::getTemplate('index');
+      return Template::buildTemplate($template);
     }
   }
 ?>

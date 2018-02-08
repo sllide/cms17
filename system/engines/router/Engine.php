@@ -1,42 +1,44 @@
 <?php
-  return new class extends AbstractEngine {
+  class Router implements Engine{
 
-    public function init() {
+    static $URI;
 
-      if(!isset($this->URI)) {
+    public static function __init__() {
+
+      if(!isset(self::$URI)) {
         $path = trim($_SERVER['REQUEST_URI'], "/");
-        $this->URI = explode("/", $path);
+        self::$URI = explode("/", $path);
       }
     }
 
-    function getPath() {
-      return $this->URI;
+    static function getPath() {
+      return self::$URI;
     }
 
-    function getPage() {
-      if(isset($this->URI[0]) && $this->URI[0]!="") {
-        return $this->URI[0];
+    static function getPage() {
+      if(isset(self::$URI[0]) && self::$URI[0]!="") {
+        return self::$URI[0];
       }
       return "home";
     }
 
-    function getAction() {
-      if(isset($this->URI[1])) {
-        return $this->URI[1];
+    static function getAction() {
+      if(isset(self::$URI[1])) {
+        return self::$URI[1];
       }
       return false;
     }
 
-    function getParameters() {
-      if(isset($this->URI[2])) {
-        return array_slice($this->URI, 2);
+    static function getParameters() {
+      if(isset(self::$URI[2])) {
+        return array_slice(self::$URI, 2);
       }
       return false;
     }
 
-    function shift() {
-      if(isset($this->URI))
-      array_shift($this->URI);
+    static function shift() {
+      if(isset(self::$URI))
+      array_shift(self::$URI);
     }
   }
 ?>

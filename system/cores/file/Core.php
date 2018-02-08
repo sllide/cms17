@@ -1,57 +1,26 @@
 <?php
-  return new class extends AbstractCore {
+  return new class implements Core {
+
+    private $output;
 
     function init() {
-      $params = $this->get('router')->getParameters();
-
-      //if not all parameters are there, return a file not found
-      if($params && count($params)<2) { return; }
-
-      //get parameters
-      $systemType = $this->get('router')->getPage();
-      $system = $this->get('router')->getAction();
-      $fileType = $params[0];
-      $fileName = $params[1];
-
-      //construct path
-      $path = "";
-      switch($systemType) {
-        case "core":
-          $path .= "system/cores/";
-          break;
-        default:
-          return;
+      //disable direct logging so it doesnt mess with the file contents
+      Log::setDirectLog(false);
+      $file = Router::getPage();
+      $path = "system/files/$file";
+      if(file_exists($path)) {
+        $mime = $this->getType($path);
+        header("Content-type: $mime");
+        $this->output = file_get_contents($path);
       }
+    }
 
-      $path .= $system . "/";
-
-      switch($fileType) {
-        case "image":
-          $path .= "images/";
-          break;
-        case "css":
-          $path .= "css/";
-          break;
-        default:
-          return;
+    function getType($path) {
+      //css doesnt get picked up by mime_content_type :(
+      if(substr($path, count($path)-4) === "css") {
+        return "text/css";
       }
-
-      $path .= $fileName;
-      if(!file_exists($path) || is_dir($path)) {
-        return;
-      }
-      
-      //set mime type accordingly
-      switch($fileType) {
-        case "css":
-          header("Content-type: text/css");
-          break;
-        default:
-          $mime = mime_content_type($path);
-          header("Content-type: $mime");
-      }
-
-      $this->output = file_get_contents($path);
+      return mime_content_type($path);
     }
 
     function build() {

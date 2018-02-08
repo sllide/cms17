@@ -1,54 +1,54 @@
 <?php
-  return new class extends AbstractEngine{
-    private $plugin;
+  class Plugin implements Engine{
+    private static $plugin;
 
-    function init() {
+    static function __init__() {
+
     }
 
-    function load($name) {
-      if(isset($this->plugin)) {
-        $this->get('log')->error("Trying to load $name while a plugin is already loaded");
+    static function load($name) {
+      if(self::$plugin) {
+        Log::error("Trying to load $name while a plugin is already loaded");
         return false;
       }
 
-      if(!$this->get('database')->system->isPluginEnabled($name)) {
-        $this->get('log')->error("Trying to load plugin $name wich is disabled");
+      if(!Database::$system->isPluginEnabled($name)) {
+        Log::error("Trying to load plugin $name which is disabled");
       }
 
       $plugin = require_once("plugins/$name/Plugin.php");
-
-      if(get_parent_class($plugin) == "AbstractPlugin") {
-        $this->plugin = $plugin;
-        $this->plugin->get = [$this, 'get'];
-        $this->plugin->init();
+      echo get_parent_class($plugin);
+      if(in_array("Plug", class_implements($plugin))) {
+        self::$plugin = $plugin;
+        self::$plugin->init();
         return true;
       } else {
-        $this->get('log')->error("Plugin $name does not extend AbstractPlugin");
+        Log::error("Plugin $name does not implement Plug");
         return false;
       }
     }
 
-    function build() {
-      return $this->plugin->build();
+    static function build() {
+      return self::$plugin->build();
     }
 
-    function unload() {
-      unset($this->plugin);
+    static function unload() {
+      self::$plugin = false;
     }
 
-    function install($name) {
-      if($this->get('file')->doesPluginExist($name)) {
+    static function install($name) {
+      if(File::doesPluginExist($name)) {
         $data = require("plugins/$name/Data.php");
-        $tables = $data->databaseStructure;
+        $tables = $data->structure();
 
         foreach($tables as $table => $data) {
-          $this->get('database')->createTable($name."__".$table, $data);
+          Database::createTable($name."__".$table, $data);
         }
 
-        $this->get('database')->system->enablePlugin($name);
-        if($this->load($name)) {
-          $this->plugin->install();
-          $this->unload();
+        Database::$system->enablePlugin($name);
+        if(self::load($name)) {
+          self::$plugin->install();
+          self::unload();
         }
       }
     }

@@ -1,47 +1,36 @@
 <?php
-  return new class extends AbstractEngine{
+  class File {
 
-    function init(){
+    public static function __init__(){}
 
-    }
-
-    private function getBasePath() {
-      $type = $this->who['type'];
-      $system = $this->who['system'];
-
-      if($type == 'core') { return "system/cores/$system"; }
-      if($type == 'engine') { return "system/engines/$system"; }
-      if($type == 'plugin') { return "plugins/$system"; }
-
-      $this->get('log')->error("Unhandled base path. Unknown system type $type");
-    }
-
-    public function getTemplate($name) {
-      $path = $this->getBasePath();
-      if(file_exists("$path/templates/$name.html")) {
-        return file_get_contents("$path/templates/$name.html");
+    public static function getTemplate($name) {
+      $in = explode("/", debug_backtrace()[0]['file']);
+      array_pop($in);
+      $out = implode("/", $in)."/templates/$name.html";
+      if(file_exists($out)) {
+        return file_get_contents($out);
       }
-      $this->get('log')->error("Cannot load template <b>$name</b>, file not found.");
+      Log::error("Template $name does not exist");
     }
 
-    public function getExtention($name) {
-      $path = $this->getBasePath();
-      if(file_exists("$path/extentions/$name.php")) {
-        $extention = require_once("$path/extentions/$name.php");
-        $extention->get = [$this, 'get'];
-        return $extention;
+    public static function getExtension($name) {
+      $in = explode("/", debug_backtrace()[0]['file']);
+      array_pop($in);
+      $out = implode("/", $in)."/extensions/$name.php";
+      if(file_exists($out)) {
+          return require $out;
       }
-      $this->get('log')->error("Cannot load extention <b>$name</b>, file not found.");
+      Log::error("Extension $name does not exist");
     }
 
-    public function doesPluginExist($name) {
+    public static function doesPluginExist($name) {
       if(file_exists("plugins/$name")) {
         return true;
       }
       return false;
     }
 
-    public function getAllPluginNames() {
+    public static function getAllPluginNames() {
       $names = [];
       $paths = array_filter(glob('plugins/*'), 'is_dir');
       foreach($paths as $path) {
@@ -50,7 +39,7 @@
       return $names;
     }
 
-    public function getPluginData($name) {
+    public static function getPluginData($name) {
       return require("plugins/$name/Data.php");
     }
   }

@@ -1,19 +1,19 @@
 <?php
-  return new class extends AbstractCore {
+  return new class implements Core{
 
     function init() {
       $this->getPage();
 
-      $this->get('template')->addRequiredTag("content", [$this, "content"]);
-      $this->get('template')->addRequiredTag("navigation", [$this, "navigation"]);
-      $this->get('template')->addRequiredTag("pluginContent", [$this, "pluginContent"]);
+      Template::addRequiredTag("content", [$this, "content"]);
+      Template::addRequiredTag("navigation", [$this, "navigation"]);
+      Template::addRequiredTag("pluginContent", [$this, "pluginContent"]);
 
-      $this->get('template')->addDataTag("title", "Jari.xyz");
+      Template::addDataTag("title", "Jari.xyz");
     }
 
     function getPage() {
-      $page = $this->get('router')->getPage();
-      $this->page = $this->get('database')->system->getPage($page);
+      $page = Router::getPage();
+      $this->page = Database::$system->getPage($page);
       if(!$this->page) {
         $this->get('log')->warning("Page with name $page does not exist, mocking 404 data");
         $this->page = [
@@ -33,7 +33,7 @@
 
     function navigation() {
       $navbar = "";
-      $pages = $this->get('database')->system->getEnabledPages();
+      $pages = Database::$system->getEnabledPages();
       foreach($pages as $page) {
         $path = $page['path'];
         $title = $page['title'];
@@ -45,15 +45,15 @@
     function pluginContent() {
       if($this->page['pluginKey']) {
         $key = $this->page['pluginKey'];
-        $this->get('plugin')->load($key);
-        return $this->get('plugin')->build();
+        Plugin::load($key);
+        return Plugin::build();
       }
       return "";
     }
 
     function build() {
-      $template = $this->get('file')->getTemplate($this->page['template']);
-      $template = $this->get('template')->buildTemplate($template);
+      $template = File::getTemplate($this->page['template']);
+      $template = Template::buildTemplate($template);
       return $template;
     }
   }

@@ -1,6 +1,5 @@
 <?php
-  return new class extends AbstractCore {
-
+  return new class implements Core {
     private $systemTables = [
       "users" => [
         "username" => "TEXT UNIQUE NOT NULL",
@@ -28,7 +27,7 @@
     ];
 
     function init() {
-      if($this->get('database')->system->hasData()) {
+      if(Database::$system->hasData()) {
         header('location:/');
         die;
       }
@@ -39,21 +38,21 @@
       $this->username = "jari";
       $this->password = "password";
       $this->installSystem();
-      header('location:/');
+      //header('location:/');
       die;
 
-      $this->template = $this->get('file')->getTemplate('index');
+      $this->template = File::getTemplate('index');
 
-      $this->get('template')->addDataTag("form", $this->get('file')->getTemplate('form'));
-      $this->get('template')->addDataTag("username", $this->username);
-      $this->get('template')->addDataTag("usernameError", $this->usernameError);
-      $this->get('template')->addDataTag("password", $this->password);
-      $this->get('template')->addDataTag("passwordError", $this->passwordError);
+      Template::addDataTag("form", File::getTemplate('form'));
+      Template::addDataTag("username", $this->username);
+      Template::addDataTag("usernameError", $this->usernameError);
+      Template::addDataTag("password", $this->password);
+      Template::addDataTag("passwordError", $this->passwordError);
     }
 
     function installSystem() {
       foreach($this->systemTables as $table => $structure) {
-        $this->get('database')->createTable($table, $structure);
+        Database::createTable($table, $structure);
       }
 
       //manipulate data for insertion
@@ -61,18 +60,18 @@
       $this->password = password_hash($this->password, PASSWORD_DEFAULT);
 
       $data = [$this->username,$this->password,5];
-      $this->get('database')->insertIntoTable('users', $data);
+      Database::insertIntoTable('users', $data);
 
-      $this->get('plugin')->install('trash');
+      Plugin::install('trash');
 
       $data = ['Home', "home", "Content will end up here!", "index", "", 1];
-      $this->get('database')->insertIntoTable('pages', $data);
+      Database::insertIntoTable('pages', $data);
       $data = ['Trash', "trash", "Look below for the trash plugin!", "index", "trash", 1];
-      $this->get('database')->insertIntoTable('pages', $data);
+      Database::insertIntoTable('pages', $data);
     }
 
     function build() {
-      return $this->get('template')->buildTemplate($this->template);
+      return Template::buildTemplate($this->template);
     }
   }
 ?>

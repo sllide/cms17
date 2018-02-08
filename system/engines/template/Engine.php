@@ -1,34 +1,36 @@
 <?php
-  return new class extends AbstractEngine {
+  class Template implements Engine{
 
-    function init(){
-      $this->tagList = $this->get('file')->getExtention('TagList');
-      $this->linkResolver = $this->get('file')->getExtention('LinkResolver');
+    static $tagList, $linkResolver;
+
+    static function __init__(){
+      self::$tagList = File::getExtension('TagList');
+      self::$linkResolver = File::getExtension('LinkResolver');
     }
 
-    function addPersistentTag($name, callable $callback) {
-      $this->tagList->addTag($name, $this->tagList::TAG, $callback);
+    static function addPersistentTag($name, callable $callback) {
+      self::$tagList->addTag($name, self::$tagList::TAG, $callback);
     }
 
-    function addRequiredTag($name, callable $callback) {
-      $this->tagList->addTag($name, $this->tagList::REQUIRED, $callback);
+    static function addRequiredTag($name, callable $callback) {
+      self::$tagList->addTag($name, self::$tagList::REQUIRED, $callback);
     }
 
-    function addTag($name, callable $callback) {
-      $this->tagList->addTag($name, $this->tagList::SINGLE, $callback);
+    static function addTag($name, callable $callback) {
+      self::$tagList->addTag($name, self::$tagList::SINGLE, $callback);
     }
 
-    function addDataTag($name, $data) {
-      $this->tagList->addDataTag($name, $data);
+    static function addDataTag($name, $data) {
+      self::$tagList->addDataTag($name, $data);
     }
 
-    function buildTemplate($template) {
-      $template = $this->findAndReplaceTags($template);
-      $template = $this->resolveLinks($template);
+    static function buildTemplate($template) {
+      $template = self::findAndReplaceTags($template);
+      //$template = self::resolveLinks($template);
       return $template;
     }
 
-    private function findAndReplaceTags($template) {
+    private static function findAndReplaceTags($template) {
       while(true) {
         preg_match("/@@[a-zA-Z]+@@/", $template, $match, PREG_OFFSET_CAPTURE);
         if(empty($match)) {
@@ -39,27 +41,27 @@
         $tagName = str_replace("@", "", $match[0][0]);
         $tagOffset = $match[0][1];
 
-        $tag = $this->tagList->getTagContent($tagName);
+        $tag = self::$tagList->getTagContent($tagName);
         if(gettype($tag) == "Boolean" || gettype($tag) == "NULL") {
-          $this->get('log')->notice("Cant resolve tag <b>$tagName</b>");
+          self::$get('log')->notice("Cant resolve tag <b>$tagName</b>");
           $template = substr_replace($template, "", $tagOffset, $tagLength);
         } else {
           $template = substr_replace($template, $tag, $tagOffset, $tagLength);
         }
       }
-      $missedTags = $this->tagList->getRequiredTags();
+      $missedTags = self::$tagList->getRequiredTags();
 
       if($missedTags) {
         $missedTagString = "";
         foreach($missedTags as $key) {
           $missedTagString .= "$key ";
         }
-        $this->get('log')->error("Not satisfied, missing required tags: <b>$missedTagString</b>");
+        Log::error("Not satisfied, missing required tags: <b>$missedTagString</b>");
       }
       return $template;
     }
 
-    private function resolveLinks($template) {
+    private static function resolveLinks($template) {
       while(true) {
         preg_match("/!![a-zA-Z]+\/[a-zA-Z.]+!!/", $template, $match, PREG_OFFSET_CAPTURE);
         if(empty($match)) {
@@ -70,7 +72,7 @@
         $tagName = str_replace("!", "", $match[0][0]);
         $tagOffset = $match[0][1];
 
-        $link = $this->linkResolver->build($tagName, $this->who);
+        $link = self::$linkResolver->build($tagName, "x");
 
         $template = substr_replace($template, $link, $tagOffset, $tagLength);
       }

@@ -1,5 +1,5 @@
 <?php
-  return new class extends AbstractEngine{
+  class Profiler {
     private $timers = [];
 
     function init() {

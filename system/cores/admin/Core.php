@@ -1,5 +1,5 @@
 <?php
-  return new class extends AbstractCore {
+  return new class implements Core {
 
     function init() {
       $this->template = $this->get('file')->getTemplate('index');

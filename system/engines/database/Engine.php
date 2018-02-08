@@ -1,15 +1,16 @@
 <?php
-  return new class extends AbstractEngine {
+  class Database implements Engine {
 
-    function init() {
-      $this->db = new PDO("sqlite:system/database.db");
-      $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $this->system = $this->get('file')->getExtention('System');
-      $this->system->db = $this->db;
+    static $db, $system;
 
+    static function __init__() {
+      self::$db = new PDO("sqlite:system/database.db");
+      self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      self::$system = File::getExtension('System');
+      self::$system->db = self::$db;
     }
 
-    function createTable($table, $data) {
+    static function createTable($table, $data) {
       //pdo doesnt allow binding parameters other than values
       $q = "CREATE TABLE IF NOT EXISTS $table (";
       foreach($data as $key => $value) {
@@ -17,26 +18,26 @@
       }
       $q = substr($q,0,strlen($q)-1) . ")";
 
-      $s = $this->db->prepare($q);
+      $s = self::$db->prepare($q);
       $s->execute();
     }
 
-    function getAllFromTable($table) {
+    static function getAllFromTable($table) {
       //pdo doesnt allow binding parameters other than values
       $q = "SELECT * FROM $table";
-      $s = $this->db->prepare($q);
+      $s = self::$db->prepare($q);
       $s->execute();
       return $s->fetchAll();
     }
 
-    function insertIntoTable($table, $data) {
+    static function insertIntoTable($table, $data) {
       $q = "INSERT INTO $table VALUES(";
       for($i=0;$i<count($data);$i++) {
         $q .= "?,";
       }
       $q = substr($q,0,strlen($q)-1) . ")";
 
-      $s = $this->db->prepare($q);
+      $s = self::$db->prepare($q);
 
       //bind data
       for($i=0;$i<count($data);$i++) {
@@ -44,10 +45,10 @@
       }
 
       $s->execute();
-      return $this->db->lastInsertId();
+      return self::$db->lastInsertId();
     }
 
-    function insertStructIntoTable($table, $data) {
+    static function insertStructIntoTable($table, $data) {
       $q = "INSERT INTO $table (";
       foreach($data as $key => $value) {
         $q .= "" . $key . ",";
@@ -61,7 +62,7 @@
 
       $q = substr($q,0,strlen($q)-1) . ")";
 
-      $s = $this->db->prepare($q);
+      $s = self::$db->prepare($q);
 
       $i = 0;
       $keys = [];
@@ -74,7 +75,7 @@
       }
 
       $s->execute();
-      return $this->db->lastInsertId();
+      return self::$db->lastInsertId();
     }
   }
 ?>
