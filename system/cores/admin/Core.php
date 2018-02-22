@@ -2,36 +2,35 @@
   return new class implements Core {
 
     function init() {
-      $this->template = $this->get('file')->getTemplate('index');
+      $this->template = File::getTemplate('index');
       $this->registerTags();
     }
 
     function registerTags() {
-      $this->get('template')->addRequiredTag("navigation", [$this, 'navigation']);
-      $this->get('template')->addRequiredTag("pluginNavigation", [$this, 'pluginNavigation']);
-      $this->get('template')->addRequiredTag("page", [$this, 'page']);
+      Template::addRequiredTag("navigation", [$this, 'navigation']);
+      Template::addRequiredTag("pluginNavigation", [$this, 'pluginNavigation']);
+      Template::addRequiredTag("page", [$this, 'page']);
     }
 
     function build() {
-      return $this->get('template')->buildTemplate($this->template);
+      return Template::buildTemplate($this->template);
     }
 
     //TAG CALLBACKS
 
-
     function navigation() {
-      return $this->get('file')->getTemplate('sidebar');
+      return File::getTemplate('sidebar');
     }
 
     function pluginNavigation() {
       $data = "";
       //get plugin panels
-      $activePlugins = $this->get('database')->system->getEnabledPlugins();
+      $activePlugins = Database::$system->getEnabledPlugins();
       foreach($activePlugins as $row) {
         $key = $row['name'];
-        if($this->get('file')->doesPluginExist($key)) {
+        if(File::doesPluginExist($key)) {
           $pluginData = require("plugins/$key/Data.php");
-          $name = $pluginData->name;
+          $name = $pluginData->name();
           $data .= "<li><a href='/admin/plugin/$key'>$name</a></li>";
         }
       }
@@ -39,13 +38,15 @@
     }
 
     function page() {
-      $page = $this->get('router')->getPage();
+      $page = Router::getPage();
       switch($page) {
         case 'plugins':
-          return $this->get('file')->getExtention("Plugins")->build();
+          return File::getExtension("Plugins")->build();
+        case 'log':
+          return File::getExtension("Log")->build();
         case 'dashboard':
         case 'home':
-          return $this->get('file')->getExtention("Dashboard")->build();
+          return File::getExtension("Dashboard")->build();
         default:
           return "Page not found";
       }

@@ -43,7 +43,7 @@
 
         $tag = self::$tagList->getTagContent($tagName);
         if(gettype($tag) == "Boolean" || gettype($tag) == "NULL") {
-          self::$get('log')->notice("Cant resolve tag <b>$tagName</b>");
+          Log::notice("Cant resolve tag <b>$tagName</b>");
           $template = substr_replace($template, "", $tagOffset, $tagLength);
         } else {
           $template = substr_replace($template, $tag, $tagOffset, $tagLength);

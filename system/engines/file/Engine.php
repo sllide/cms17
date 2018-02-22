@@ -5,12 +5,13 @@
 
     public static function getTemplate($name) {
       $in = explode("/", debug_backtrace()[0]['file']);
+      if(array_search('extensions', $in)) $in = explode("/", debug_backtrace()[1]['file']);
       array_pop($in);
       $out = implode("/", $in)."/templates/$name.html";
       if(file_exists($out)) {
         return file_get_contents($out);
       }
-      Log::error("Template $name does not exist");
+      Log::error("Template <strong>'$out'</strong> does not exist");
     }
 
     public static function getExtension($name) {
