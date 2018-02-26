@@ -7,6 +7,7 @@
     }
 
     function registerTags() {
+      Template::addRequiredTag("sidebar", [$this, 'sidebar']);
       Template::addRequiredTag("navigation", [$this, 'navigation']);
       Template::addRequiredTag("pluginNavigation", [$this, 'pluginNavigation']);
       Template::addRequiredTag("page", [$this, 'page']);
@@ -18,8 +19,12 @@
 
     //TAG CALLBACKS
 
-    function navigation() {
+    function sidebar() {
       return File::getTemplate('sidebar');
+    }
+
+    function navigation() {
+      return File::getTemplate('navigation');
     }
 
     function pluginNavigation() {

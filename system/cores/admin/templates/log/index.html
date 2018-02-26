@@ -1,19 +1,19 @@
-<section>
-  <div class="card events-card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Message log
-      </p>
-    </header>
-    <div class="table log">
-        <table class="table is-fullwidth">
-          <thead>
-            <tr><td>Invoker</td><td>Type</td><td>Message</td><tr>
-          </thead>
-          <tbody>
-            @@list@@
-          </tbody>
-        </table>
+<div class="uk-card uk-card-small uk-card-default">
+    <div class="uk-card-header">
+        <h3 class="uk-card-title">Message log</h3>
     </div>
-  </div>
-</section>
+    <div class="uk-card-body">
+      <table class="uk-table uk-table-justify uk-table-small uk-table-divider uk-table-hover">
+        <thead>
+          <tr>
+            <th>Invoker</th>
+            <th>Type</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          @@list@@
+        </tbody>
+      </table>
+    </div>
+</div>

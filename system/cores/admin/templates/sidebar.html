@@ -1,14 +1,41 @@
-<p class='menu-label'>System</p>
-<ul class='menu-list'>
-  <li><a href='/admin'>Dashboard</a></li>
-  <li><a href='/admin/pages'>Pages</a></li>
-  <li><a href='/admin/log'>Log</a></li>
-  <li><a href='/admin/profiler'>Profiler</a></li>
-</ul>
+<div class="tm-sidebar tm-padding uk-background-secondary uk-light">
+  <h1 class="uk-heading-divider">CMS17</h1>
+  <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+    <li class="uk-nav-header">SYSTEM</li>
+    <li>
+      <a href='/admin'>
+        <span class="uk-margin-small-right" uk-icon="icon: home"></span>
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a href='/admin/pages'>
+        <span class="uk-margin-small-right" uk-icon="icon: file-edit"></span>
+        Pages
+      </a>
+    </li>
+    <li>
+      <a href='/admin/log'>
+        <span class="uk-margin-small-right" uk-icon="icon: album"></span>
+        Log
+      </a>
+    </li>
+    <li>
+      <a href='/admin/profiler'>
+        <span class="uk-margin-small-right" uk-icon="icon: clock"></span>
+        Profiler
+      </a>
+    </li>
 
-<p class='menu-label'>Plugins</p>
-<ul class='menu-list'>
-  <li><a href='/admin/plugins'>Plugin manager</a>
-<ul>
-  @@pluginNavigation@@
-</ul></li></ul>
+    <li class="uk-nav-header">PLUGINS</li>
+    <li class="uk-parent">
+      <a href='#'>
+        <span class="uk-margin-small-right" uk-icon="icon: settings"></span>
+        Plugin Manager
+      </a>
+      <ul class="uk-nav-sub">
+        @@pluginNavigation@@
+      </ul>
+    </li>
+  </ul>
+</div>

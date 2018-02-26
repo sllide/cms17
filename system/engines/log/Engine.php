@@ -1,6 +1,6 @@
 <?php
   class Log implements Engine{
-    private static $direct = true;
+    private static $direct = false;
     private static $backtrace = false;
 
     const TYPE_DEBUG = 0;
