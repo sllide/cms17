@@ -1,5 +1,5 @@
 body {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .tm-sidebar {
@@ -18,10 +18,10 @@ body {
 }
 
 .tm-main {
-  min-height: 100%;
+  min-height: 100vh;
 }
 
-.tm-wrapper {
+.tm-holder {
     padding-left: 300px;
     -webkit-transition: padding-left 0.5s;
     -moz-transition: padding-left 0.5s;
@@ -49,4 +49,29 @@ body {
 }
 .uk-card {
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 959px) {
+  .tm-holder {
+    padding-left: 0;
+    overflow-x: hidden;
+  }
+  .tm-wrapper {
+    width: 100vw;
+  }
+  .tm-main.tm-sidebar-hidden .tm-holder {
+    padding-left: 300px;
+  }
+  .tm-sidebar {
+    left: -300px;
+  }
+  .tm-main.tm-sidebar-hidden .tm-sidebar {
+    left: 0;
+  }
+  .tm-toggle.table {
+    display: inline-block;
+  }
+  .tm-toggle.close {
+    display: none;
+  }
 }
