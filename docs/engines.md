@@ -1,15 +1,22 @@
 Engines
 ==========
-
 All engines are described here, to see what the methods are of these engines navigate to the engine itself.
+
+Database
+----------
+Any database operation will be routed through this engine.
 
 File
 ----------
 If files need to be loaded or validated
 
-Database
+Log
 ----------
-Any database operation will be routed through this engine.
+If something weird happens tell it to the log engine! It will handle all messages and display them where needed. By default the log engine will log warnings and errors to the log table. However you can tell the log engine to directly output messages to the client. This will also show extra notices where told to.
+
+Profiler
+----------
+Is your crispy website not smooth enough? Figure out what is stopping your website from becoming sentient and taking over the world.
 
 Install
 ----------
@@ -18,10 +25,6 @@ This engine will be in charge of installing plugins.
 Security
 ----------
 Want to check a plugin for anything suspicious? Ask the security engine what it thinks of said plugin.
-
-Log
-----------
-If something weird happens tell it to the log engine! It will handle all messages and display them where needed. By default the log engine will log warnings and errors to the log table. However you can tell the log engine to directly output messages to the client. This will also show extra notices where told to.
 
 Plugin
 ----------
@@ -34,10 +37,6 @@ The post engine will handle all incoming data when the website is called from /p
 Routing
 ----------
 This engine is responsible for keeping track of what core is needed, wich page to load. what action to do.
-
-Service
-----------
-Services are abstracted layers between plugins and engines. As engines have full access to everything it isnt smart to
 
 Template
 ----------

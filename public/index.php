@@ -1,4 +1,8 @@
 <?php
+  ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
+error_reporting(-1);
+
   //some things need to be setup before cms17 will be able to run. These commands should not be changed
   chdir("..");
 
