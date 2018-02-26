@@ -23,26 +23,7 @@ The core will be in charge of handling everything considered top level for what 
     * **TemplateEngine** Ask core for data.
     * **Core** Return page content via callback function.
   * Found plugin tag.
-    * **TemplateEngine** Ask core for data.
-    * **PluginEngine** Load plugin.
-    * **DatabaseEngine** Is plugin enabled?
-    * Plugin is disabled.
-      * **LogEngine** Report loading of disabled plugin.
-    * Plugin is enabled.
-      * **FileEngine** Does plugin exist and is it complete?
-      * (Part of) plugin is missing.
-        * **LogEngine** Report missing plugin files.
-      * Plugin is valid.
-        * **PluginEngine** Load and validate plugin data.
-        * Plugin requests invalid services.
-          * **LogEngine** Report plugin requesting invalid services.
-        * Plugin doesnt extend correct classes.
-          * **LogEngine** Report plugin not having correct classes.
-        * Plugin is valid.
-          * **PluginEngine** Expose requested services to plugin.
-          * **PluginEngine** Invoke plugin entry point.
-            * **Plugin** Poke services until satisfied.
-            * **Plugin** Return data.
+    * **Conjure black magic**
   * Found unexisting tag.
     * **LogEngine** Report missing tag name.
     * **TemplateEngine** Remove tag from template.
