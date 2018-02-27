@@ -27,7 +27,7 @@ body {
     -moz-transition: padding-left 0.5s;
     transition: padding-left 0.5s;
 }
-.tm-main.tm-sidebar-hidden .tm-wrapper {
+.tm-main.tm-sidebar-hidden .tm-holder {
   padding-left: 0;
 }
 

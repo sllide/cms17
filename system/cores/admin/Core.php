@@ -36,7 +36,7 @@
         if(File::doesPluginExist($key)) {
           $pluginData = require("plugins/$key/Data.php");
           $name = $pluginData->name();
-          $data .= "<li><a href='/admin/plugin/$key'>$name</a></li>";
+          $data .= "<li><a href='/admin/plugin/$key'><span class='uk-margin-small-right' uk-icon='icon: minus'></span>$name</a></li>";
         }
       }
       return $data;
