@@ -2,7 +2,7 @@
   return new class {
 
     function build() {
-      Template::addTag('pluginList', [$this, 'buildList']);
+      Template::addTag('list', [$this, 'buildList']);
       return File::getTemplate('plugins/index');
     }
 
@@ -17,7 +17,13 @@
 
     function buildEntry($key) {
       $pluginData = File::getPluginData($key);
-      return sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>X</td></tr>", $pluginData->name(), $key, 'enabled');
+      $entry = "
+        <tr><td>%s</td><td>%s</td><td>%s</td><td>
+        <span uk-icon='icon: close'></span>
+        <span uk-icon='icon: trash'></span>
+        </td></tr>
+      ";
+      return sprintf($entry, $pluginData->name(), $key, 'enabled');
     }
   }
 ?>
