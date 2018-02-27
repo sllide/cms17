@@ -4,7 +4,7 @@ CMS17 is far from done. Way to many wild ideas.
 
 Major
 ----------
-* The file engine is really fragile. It needs to be able to find files dynamicly. However, the way it does this is shitty. OS'es have different ways of reporting file paths and such. Find a more uniform way.
+* The file engine(Log engine too) is really fragile. It needs to be able to find files dynamicly. However, the way it does this is shitty. OS'es have different ways of reporting file paths and such. Find a more uniform way.
 * Tags in templates should be resolved automaticly and not rely on registered callbacks.
 
 Minor
