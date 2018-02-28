@@ -8,6 +8,7 @@ Major
   * There is a really simple fix for the log engine. Remove the invoker functionality. While it looks fancy its completely useless as the backtrace reports this too.
 * Tags in templates should be resolved automaticly and not rely on registered callbacks.
 * Create a engine called SystemDB that handles all cms17 related database functions
+* The database itself isnt exactly safe, fix this.
 
 Minor
 ----------

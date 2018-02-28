@@ -1,6 +1,6 @@
 <?php
   class Log implements Engine{
-    private static $direct = false;
+    private static $direct = true;
     private static $backtrace = false;
 
     const TYPE_DEBUG = 0;
@@ -38,7 +38,7 @@
       if(self::$direct) {
         self::directLog($invoker, self::TYPE_WARNING, $message);
       }
-      Database::insertIntoTable('log', [$invoker, self::TYPE_WARNING, $message, self::getBacktrace()]);
+      Database::insertIntoTable('log', [self::TYPE_WARNING, $message, self::getBacktrace()]);
     }
 
     public static function error($message) {
@@ -46,7 +46,7 @@
       if(self::$direct) {
         self::directLog($invoker, self::TYPE_ERROR, $message);
       }
-      Database::insertIntoTable('log', [$invoker, self::TYPE_ERROR, $message, self::getBacktrace()]);
+      Database::insertIntoTable('log', [self::TYPE_ERROR, $message, self::getBacktrace()]);
     }
 
     private static function directLog($invoker, $type, $message) {

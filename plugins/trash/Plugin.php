@@ -1,20 +1,15 @@
 <?php
   return new class implements Plug {
     public function init() {
-      Template::addTag('rows', [$this, 'rows']);
-    }
-
-    public function rows() {
-      $data = "";
-      $rows = Database::getAllFromTable('trash__cucumber');
-      foreach($rows as $row) {
-        $data .= print_r($row,true) . "<br />";
-      }
-      return $data;
     }
 
     public function install() {
-      Database::insertIntoTable('trash__cucumber', ["YES", "NO?", "okay"]);
+      Database::insertIntoTable('trash_cucumber', ["YES", "NO?", "okay"]);
+      Database::insertIntoTable('trash_cucumber', ["32", "NO?", "okay"]);
+      Database::insertIntoTable('trash_cucumber', ["6", "NO?", "okay"]);
+      Database::insertIntoTable('trash_cucumber', ["2", "NO?", "okay"]);
+      Database::insertIntoTable('trash_cucumber', ["Y5", "NA?", "fffkay"]);
+      Database::insertIntoTable('trash_cucumber', ["Y2S", "Na?", "okay"]);
     }
 
     public function build() {

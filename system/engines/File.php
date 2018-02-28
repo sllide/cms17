@@ -1,5 +1,5 @@
 <?php
-  class File {
+  class File implements Engine{
 
     public static function __init__(){}
 

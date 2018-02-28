@@ -1,17 +1,73 @@
 html {
+  overflow-x:hidden;
+  width: 100%;
+}
+body {
   background-image: url("/file/background.png");
+  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif; !important
 }
 
-.mainContent {
+.logo-big {
+  display: none;  
+}
+
+.logo-small {
+  display: unset;
+}
+
+.logo, .navigation {
+  text-align: center;
+}
+
+.link {
+  display: inline;
+  padding: 2px;
+}
+
+/* desktop specific css */
+@media only screen and (min-width: 550px) {
+  .logo-big {
+    display: unset;
+  }
+
+  .logo-small {
+    display: none;
+  }
+
+  .logo {
+    text-align: left;
+    padding-left: 10px;
+    display: inline-block;
+    float: none;
+    vertical-align: middle;
+  }
+
+  .navigation {
+    text-align: right;
+    display: inline-block;
+    float: none;
+    margin-left: 0;
+    vertical-align: middle;
+  }
+
+  .link {
+    display: block;
+  }
+}
+/* end desktop css */
+
+.container {
+  max-width: 1240px;
+}
+
+.th-content {
   position: relative;
 }
 
-.floatImage {
+.th-float-image {
   position: absolute;
 }
 
-.container.is-fluid {
-  margin-left: 32px;
-  margin-right: 32px;
-  !important
+a {
+  text-decoration: none;
 }

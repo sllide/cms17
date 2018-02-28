@@ -7,7 +7,6 @@
         "level" => "INT NOT NULL DEFAULT 0",
       ],
       "log" => [
-        "invoker" => "TEXT NOT NULL",
         "type" => "TEXT NOT NULL",
         "message" => "TEXT NOT NULL",
         "backtrace" => "TEXT NOT NULL",
@@ -20,14 +19,13 @@
         "title" => "TEXT NOT NULL",
         "path" => "TEXT NOT NULL",
         "content" => "TEXT NOT NULL",
-        "template" => "TEXT NOT NULL",
         "pluginKey" => "TEXT",
         "enabled" => "BOOLEAN NOT NULL DEFAULT 0",
       ],
     ];
 
     function init() {
-      if(Database::$system->hasData()) {
+      if(Database::hasData()) {
         header('location:/');
         die;
       }
@@ -38,7 +36,7 @@
       $this->username = "jari";
       $this->password = "password";
       $this->installSystem();
-      //header('location:/');
+      header('location:/');
       die;
 
       $this->template = File::getTemplate('index');
@@ -63,11 +61,19 @@
       Database::insertIntoTable('users', $data);
 
       Plugin::install('trash');
+      Plugin::install('guestbook');
 
-      $data = ['Home', "home", "Content will end up here!", "index", "", 1];
+      $data = ['Home', "home", "Content will end up here!", "", 1];
       Database::insertIntoTable('pages', $data);
-      $data = ['Trash', "trash", "Look below for the trash plugin!", "index", "trash", 1];
+      $data = ['Trash', "trash", "Look below for the trash plugin!", "trash", 1];
       Database::insertIntoTable('pages', $data);
+      $data = ['Guestbook', "guest", "guestbook stilo", "guestbook", 1];
+      Database::insertIntoTable('pages', $data);
+
+      for($i=0;$i<10;$i++) {
+        $data = [$i, 'test error', "backtrace$i"];
+        Database::insertIntoTable('log', $data);
+      }
     }
 
     function build() {
