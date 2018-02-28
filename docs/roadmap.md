@@ -7,6 +7,7 @@ Major
 * The file engine(Log engine too) is really fragile. It needs to be able to find files dynamicly. However, the way it does this is shitty. OS'es have different ways of reporting file paths and such. Find a more uniform way.
   * There is a really simple fix for the log engine. Remove the invoker functionality. While it looks fancy its completely useless as the backtrace reports this too.
 * Tags in templates should be resolved automaticly and not rely on registered callbacks.
+* Create a engine called SystemDB that handles all cms17 related database functions
 
 Minor
 ----------

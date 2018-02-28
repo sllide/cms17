@@ -28,17 +28,6 @@ Engines will define the basic functionality of something. Be it Files, Databases
       * **Extention.php** A anonymous class that the engine can request and use.
       * ..
 
-## /system/services
-Services are the middleman between plugins and engines. While engines define basic functionality this is where the system resides and allowing plugins to use these can be dangerous. Services will
-
-#### File Structure
-  * **AbstractService.php** The basic functionality of a service will be defined here.
-  * Engine folder/
-    * **Service.php** The entry point of a service.
-    * classes/
-      * **Extention.php** A anonymous class that the service can request and use.
-      * ..
-
 ## /plugins
 While every other plugin like system described here has a pretty simmilar file structure plugins are a whole different case. plugins will be way more restricted compared to everything else as this is where (hopefully) third-party code will reside.
 
