@@ -4,10 +4,9 @@
     private $output;
 
     function init() {
-      //disable direct logging so it doesnt mess with the file contents
-      Log::setDirectLog(false);
-      $file = Router::getPage();
-      $path = "system/files/$file";
+      $core = Router::getPage();
+      $file = Router::getAction();
+      $path = "system/cores/$core/files/$file";
       if(file_exists($path)) {
         $mime = $this->getType($path);
         header("Content-type: $mime");

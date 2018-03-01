@@ -22,6 +22,15 @@
         "pluginKey" => "TEXT",
         "enabled" => "BOOLEAN NOT NULL DEFAULT 0",
       ],
+      "tags" => [
+        "name" => "TEXT NOT NULL",
+        "eval" => "BOOLEAN NOT NULL",
+        "content" => "TEXT",
+      ],
+      "settings" => [
+        "key" => "TEXT NOT NULL",
+        "value" => "TEXT",
+      ],
     ];
 
     function init() {
@@ -69,11 +78,8 @@
       Database::insertIntoTable('pages', $data);
       $data = ['Guestbook', "guest", "guestbook stilo", "guestbook", 1];
       Database::insertIntoTable('pages', $data);
-
-      for($i=0;$i<10;$i++) {
-        $data = [$i, 'test error', "backtrace$i"];
-        Database::insertIntoTable('log', $data);
-      }
+      $data = ['title', 0, 'Jari.xyz'];
+      Database::insertIntoTable('tags', $data);
     }
 
     function build() {

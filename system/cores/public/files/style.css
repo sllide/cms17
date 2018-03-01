@@ -68,6 +68,10 @@ body {
   position: absolute;
 }
 
+.padding-top {
+  padding-top: 50px;
+}
+
 a {
   text-decoration: none;
 }

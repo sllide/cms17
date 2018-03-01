@@ -3,7 +3,7 @@
 
     static $URI;
 
-    public static function __init__() {
+    static function __init__() {
 
       if(!isset(self::$URI)) {
         $path = trim($_SERVER['REQUEST_URI'], "/");

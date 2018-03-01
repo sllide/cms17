@@ -2,7 +2,7 @@
   class CMS17 {
     public function __construct() {
       //set default core
-      $coreName = "default";
+      $coreName = "public";
       if(!Database::hasData()) {
         $coreName = "setup";
       }
@@ -18,7 +18,7 @@
       $corePath = "system/cores/$page/Core.php";
       if(file_exists($corePath)) {
         $coreName = $page;
-        Router::shift(); //shift the path to hide the core
+        Router::shift(); //shift the path to hide the core from the router
       }
       //load said core
       $this->core = require_once("system/cores/$coreName/Core.php");
