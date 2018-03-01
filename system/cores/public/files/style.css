@@ -3,7 +3,7 @@ html {
   width: 100%;
 }
 body {
-  background-image: url("/file/background.png");
+  background-image: url("/file/public/background.png");
   font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif; !important
 }
 
