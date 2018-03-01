@@ -8,8 +8,9 @@
       }
 
       //load global tags
-      Template::addTags(require_once("user/Tags.php"));
-
+      if(file_exists("user/Tags.php")) {
+        Template::addTags(require_once("user/Tags.php"));
+      }
       //ask the router what the first parameter is to determine if its a core or not
       $page = Router::getPage();
       
@@ -23,7 +24,9 @@
       $this->core = require_once("system/cores/$coreName/Core.php");
       
       //register its tags
-      Template::addTags(require_once("system/cores/$coreName/Tags.php"));
+      if(file_exists("system/cores/$coreName/Tags.php")) {
+        Template::addTags(require_once("system/cores/$coreName/Tags.php"));
+      }
 
       //initialze and build!
       $this->core->init();
